@@ -3,7 +3,8 @@ import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.time.Duration;
 import java.time.LocalDate;
-import java.time.Period;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.Scanner;
 
 public class Flight {
@@ -28,7 +29,7 @@ public class Flight {
 		this.departureDate = departureDate;
 		this.returnDate = returnDate;
 		this.durationOfFlight = durationOfFlight;
-		this.stayingDuarion = Duration.between(departureDate, returnDate);
+		this.stayingDuarion = Duration.between(LocalDateTime.of(departureDate, LocalTime.of(0,0)), LocalDateTime.of(returnDate, LocalTime.of(0,0)));
 
 		this.gate = gate;
 		this.status = eStatus.OnTime;
@@ -100,7 +101,7 @@ public class Flight {
 				   + "at "+ this.departureDate.toString() +" | "
 				   + "Landing in: "+ this.destination +" "
 				   + "and returning at :"+ this.returnDate.toString() +" | "
-				   + "Duration of flights: "+ this.durationOfFlight +" hours | "
+				   + "Duration of flights: "+ this.durationOfFlight.toMinutes() +" minutes | "
 				   + "Duration of staying: "+ stayingDuarion.toDays() +" days | "
 				   + "Current status: "+ this.status.toString();
 		return str;

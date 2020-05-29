@@ -9,10 +9,11 @@ import FlightsControl.Flight.eStatus;
 
 public class FlightsControl {
 	private ArrayList<Flight> flights;
-	ArrayList<Flight> presentationFlights = this.flights;
+	ArrayList<Flight> presentationFlights;
 
 	public FlightsControl() {
 		this.flights = new ArrayList<>();
+		this.presentationFlights = new ArrayList<>();
 	}
 	
 	public void save(String fileName) throws FileNotFoundException {

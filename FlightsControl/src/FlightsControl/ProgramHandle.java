@@ -17,6 +17,8 @@ public class ProgramHandle {
 		Flight f = new Flight("El al", "Israel", "Madrid", ld, d, ld1, "A1");
 		
 		fc.addFlight(f);
+		
+		System.out.println(f);
 
 		
 
