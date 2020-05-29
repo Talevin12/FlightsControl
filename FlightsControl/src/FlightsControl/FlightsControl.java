@@ -212,7 +212,7 @@ public class FlightsControl {
 		return this.flights.toString();
 	}
 	
-	private String showFlights() {
+	public String showFlights() {
 		StringBuffer str = new StringBuffer("Flights: \n");
 		for(int i = 0; i < presentationFlights.size(); i++) {
 			str.append(presentationFlights.get(i).toString() + "\n");
