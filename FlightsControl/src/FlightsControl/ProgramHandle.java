@@ -6,6 +6,7 @@ import java.time.LocalDate;
 public class ProgramHandle {
 
 	public static void main(String[] args) {
+		
 	// hard code
 		FlightsControl fc= new FlightsControl();
 		//1
@@ -81,9 +82,10 @@ public class ProgramHandle {
 		Flight f11 = new Flight("Air France", "Israel", "London", ld22, d11, ld23, "B1");
 		fc.addFlight(f11);
 		
-		
+		// testing
+		System.out.println(fc.showFlights()+"\n");
+		fc.sortFlightsByDurationOfflight();
 		System.out.println(fc.showFlights());
-		
 
 	//
 		
