@@ -3,6 +3,7 @@ import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.time.Duration;
 import java.time.LocalDate;
+import java.time.Period;
 import java.util.Scanner;
 
 public class Flight {
@@ -28,7 +29,7 @@ public class Flight {
 		this.returnDate = returnDate;
 		this.durationOfFlight = durationOfFlight;
 		this.stayingDuarion = Duration.between(departureDate, returnDate);
-		
+
 		this.gate = gate;
 		this.status = eStatus.OnTime;
 	}

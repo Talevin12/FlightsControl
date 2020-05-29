@@ -47,4 +47,7 @@ public class program {
 			System.out.println("Thank you have a nice day! :)");
 		
 		}
+	
+	
+	
 }
