@@ -2,12 +2,17 @@ package FlightsControl;
 
 import java.time.Duration;
 import java.time.LocalDate;
+import java.util.Scanner;
+
+import id314920505_id316013804.Elections;
+import id314920505_id316013804.InvalidInputException;
 
 public class ProgramHandle {
 
 	public static void main(String[] args) {
-		
-	// hard code
+
+
+		// hard code
 		FlightsControl fc= new FlightsControl();
 		//1
 		LocalDate ld= LocalDate.of(2021, 5, 14);
@@ -81,14 +86,99 @@ public class ProgramHandle {
 		Duration d11= Duration.ofMinutes(360);
 		Flight f11 = new Flight("Air France", "Israel", "London", ld22, d11, ld23, "B1");
 		fc.addFlight(f11);
-		
+
 		// testing
 		System.out.println(fc.showFlights()+"\n");
 		fc.sortFlightsByDurationOfflight();
 		System.out.println(fc.showFlights());
 
-	//
-		
+		//
+
+	}
+	static int choice = 0;
+
+	public static boolean performMainAction(Scanner scan)  {
+		switch (choice) {
+		case 1:
+			return addFlight();
+		case 2:
+			return cancelFlight();
+		case 3:
+			return performSortAction();
+		case 4:
+			return performFilterAction();
+		case 5:
+			break;
+		}
+	}
+
+	public static boolean performSortAction(Scanner scan)  {
+		switch (choice) {
+		case 1:
+			return sortFlightsByDate();
+		case 2:
+			return sortFlightsByStayingDuration();
+		case 3:
+			return sortFlightsByDurationOfflight();
+		case 4:
+			return sortByStatus();
+		case 5:
+			return performMainAction();
+		}
+	}
+
+	public static boolean performFilterAction(Scanner scan)  {
+		switch (choice) {
+		case 1:
+			return filterByAirLine();
+		case 2:
+			return filterByDestination();
+		case 3:
+			return filterByOrigin();
+		case 4:
+			return filterByDepartureDate();
+		case 5:
+			return filterByReturnDate();
+		case 6:
+			return filterByDurationOfFlight();
+		case 7:
+			return filterByGate();
+		case 8:
+			return filterByStatus();
+		case 9:
+			return performMainAction();
+			
+		}
+	}
+	public static void showMenu() {
+		//main
+		System.out.println("\nMENU: please enter the number of the desired action:");
+		System.out.println("1: Add Flight");
+		System.out.println("2: Cancel Flight");
+		System.out.println("3: Sort Flights");
+		System.out.println("4: Filter Flights");
+		System.out.println("5: EXIT");
+
+		//Sort
+		System.out.println("1: Sort Flights By Date");
+		System.out.println("2: Sort Flights By Staying Duration");
+		System.out.println("3: Sort Flights By Duration Of Flight");
+		System.out.println("4: Sort By Status");
+		System.out.println("5: Go Back To Menu");
+
+
+		//Filter
+		System.out.println("1: Filter Flights By Air Line");
+		System.out.println("2: Filter Flights By Destination");
+		System.out.println("3: Filter Flights By Origin");
+		System.out.println("4: Filter Flights By Departure Date");
+		System.out.println("5: Filter Flights By Return Date");
+		System.out.println("6: Filter Flights By Duration Of Flight");
+		System.out.println("7: Filter Flights By Gate");
+		System.out.println("8: Filter Flights By Status");
+		System.out.println("9: Go Back To Menu");
+
+
 	}
 
 }
