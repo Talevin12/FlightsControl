@@ -4,15 +4,342 @@ import java.time.Duration;
 import java.time.LocalDate;
 import java.util.Scanner;
 
-import id314920505_id316013804.Elections;
-import id314920505_id316013804.InvalidInputException;
+import FlightsControl.Flight.eStatus;
 
 public class ProgramHandle {
+	static int choice = 0;
 
-	public static void main(String[] args) {
+	public static boolean performMainAction(FlightsControl control, Scanner scan)  {
+		showMainMenu();
+
+		switch (choice) {
+		case 1:
+			return addFlight(control, scan);
+		case 2:
+			return cancelFlight(control, scan);
+		case 3:
+			performSortAction(control, scan);
+			return true;
+		case 4:
+			performFilterAction(control, scan);
+			return true;
+		default:
+			System.out.println("Wrong input! try again");
+			return performFilterAction(control, scan);
+		}
+	}
+
+	///arithmetic///
+
+	private static boolean addFlight(FlightsControl control, Scanner scan) {
+		String airlineName;
+		String origin;
+		String destination;
+		int year = 0;
+		int month = 0;
+		int day = 0;
+		LocalDate departureDate;
+		Duration durationOfFlight;
+		LocalDate returnDate;
+		String gate;
+		boolean b = false;
+
+		System.out.println("Enter Airline name: ");
+		airlineName = scan.nextLine();
+
+		System.out.println("Enter the origin location: ");
+		origin = scan.nextLine();
+
+		System.out.println("Enter the destination location: ");
+		destination  = scan.nextLine();
+
+		while(!b) {
+			System.out.println("Enter departure date: ");
+			System.out.println("Year: ");
+			year = scan.nextInt();
+
+			System.out.println("Month: ");
+			month = scan.nextInt();
+
+			System.out.println("Day: ");
+			day = scan.nextInt();
+
+			if(checkDate(year, month, day))
+				b = true;
+			else
+				System.out.println("Invalid date!");
+		}
+
+		departureDate = LocalDate.of(year, month, day); 
+
+		System.out.println("Enter the duration of the flight (In minutes): ");
+		durationOfFlight = Duration.ofMinutes(scan.nextInt());
+
+		while(!b) {
+			System.out.println("Enter return date: ");
+			System.out.println("Year: ");
+			year = scan.nextInt();
+
+			System.out.println("Month: ");
+			month = scan.nextInt();
+
+			System.out.println("Day: ");
+			day = scan.nextInt();
+
+			if(checkDate(year, month, day))
+				if(LocalDate.of(year, month, day).isAfter(departureDate))
+					b = true;
+				else
+					System.out.println("Invalid date!");
+		}
+
+		returnDate = LocalDate.of(year, month, day); 
+		scan.nextLine();
+
+		System.out.println("Enter gate number (ex: A1)");
+		gate = scan.next();
+
+		Flight flight = new Flight(airlineName, origin, destination, departureDate, durationOfFlight, returnDate, gate);
+		return control.addFlight(flight);
+	}
+
+	private static boolean cancelFlight(FlightsControl control, Scanner scan) {
+		int choice = 0;
+		boolean b = false;
+		while(!b) {
+			System.out.println("Choose a flight to cancel");
+			System.out.println(control.showFlights());
+			choice = scan.nextInt();
+			if(choice >= 1 || choice <= control.getFlights().size())
+				b = true;
+			else
+				System.out.println("Wrong input");
+		}
+		return control.cancelFlight(control.getFlights().get(choice-1).getFlightNumber());
+	}
+
+	///arithmetic///
+
+	///Sort///
+
+	public static boolean performSortAction(FlightsControl control, Scanner scan)  {
+		showSortMenu();
+		switch (choice) {
+		case 0:
+			return performMainAction(control, scan);
+		case 1:
+			sortFlightsByDate(control);
+			return performMainAction(control, scan);
+		case 2:
+			sortFlightsByStayingDuration(control);
+			return performMainAction(control, scan);
+		case 3:
+			sortFlightsByDurationOfflight(control);
+			return performMainAction(control, scan);
+		case 4:
+			sortFlightsByStatus(control);
+			return performMainAction(control, scan);
+		default:
+			System.out.println("Wrong input! try again");
+			return performSortAction(control, scan);
+		}
+	}
+
+	private static void sortFlightsByDate(FlightsControl control) {
+		control.sortFlightsByDate();
+		control.showFlights();
+	}
+
+	private static void sortFlightsByStayingDuration(FlightsControl control) {
+		control.sortFlightsByStayingDuration();
+		control.showFlights();
+	}
+
+	private static void sortFlightsByDurationOfflight(FlightsControl control) {
+		control.sortFlightsByDurationOfflight();
+		control.showFlights();
+	}
+
+	private static void sortFlightsByStatus(FlightsControl control) {
+		control.sortFlightsByStatus();
+		control.showFlights();
+	}
+
+	///sort///
 
 
-		// hard code
+	///Filter///
+
+	public static boolean performFilterAction(FlightsControl control, Scanner scan)  {
+		showFilterMenu();
+
+		switch (choice) {
+		case 0:
+			return performMainAction(control, scan);
+		case 1:
+			filterByAirLine(control, scan);
+			return performFilterAction(control, scan);
+		case 2:
+			filterByDestination(control, scan);
+			return performFilterAction(control, scan);
+		case 3:
+			filterByOrigin(control, scan);
+			return performFilterAction(control, scan);
+		case 4:
+			filterByDepartureDate(control, scan);
+			return performFilterAction(control, scan);
+		case 5:
+			filterByReturnDate(control, scan);
+			return performFilterAction(control, scan);
+		case 6:
+			filterByDurationOfFlight(control, scan);
+			return performFilterAction(control, scan);
+		case 7:
+			filterByGate(control, scan);
+			return performFilterAction(control, scan);
+		case 8:
+			filterByStatus(control, scan);
+			return performFilterAction(control, scan);
+		default:
+			System.out.println("Wrong input! try again");
+			return performFilterAction(control, scan);
+
+		}
+	}
+
+	private static void filterByAirLine(FlightsControl control, Scanner scan) {
+		System.out.println("Enter desired air line: ");
+		String airline = scan.nextLine();
+		control.filterByAirLine(airline);
+	}
+
+	private static void filterByDestination(FlightsControl control, Scanner scan) {
+		System.out.println("Enter desired destination location: ");
+		String destination = scan.nextLine();
+		control.filterByDestination(destination);
+	}
+
+	private static void filterByOrigin(FlightsControl control, Scanner scan) {
+		System.out.println("Enter desired origin location: ");
+		String origin = scan.nextLine();
+		control.filterByOrigin(origin);
+	}
+
+	private static void filterByDepartureDate(FlightsControl control, Scanner scan) {
+		boolean b = false;
+		int year = 0;
+		int month = 0;
+		int day = 0;
+		
+		
+		while(!b) {
+			System.out.println("Enter departure date: ");
+			System.out.println("Year: ");
+			year = scan.nextInt();
+
+			System.out.println("Month: ");
+			month = scan.nextInt();
+
+			System.out.println("Day: ");
+			day = scan.nextInt();
+
+			if(checkDate(year, month, day))
+				b = true;
+			else
+				System.out.println("Invalid date!");
+		}
+
+		LocalDate departureDate = LocalDate.of(year, month, day);
+		control.filterByDepartureDate(departureDate);
+	}
+
+	private static void filterByReturnDate(FlightsControl control, Scanner scan) {
+		boolean b = false;
+		int year = 0;
+		int month = 0;
+		int day = 0;
+		
+		
+		while(!b) {
+			System.out.println("Enter return date: ");
+			System.out.println("Year: ");
+			year = scan.nextInt();
+
+			System.out.println("Month: ");
+			month = scan.nextInt();
+
+			System.out.println("Day: ");
+			day = scan.nextInt();
+
+			if(checkDate(year, month, day))
+				b = true;
+			else
+				System.out.println("Invalid date!");
+		}
+
+		LocalDate returnDate = LocalDate.of(year, month, day);
+		control.filterByReturnDate(returnDate);
+	}
+
+	private static void filterByDurationOfFlight(FlightsControl control, Scanner scan) {
+		System.out.println("Enter desired min and max minutes for flight duration: ");
+		System.out.println("Minimum: ");
+		int min = scan.nextInt();
+		System.out.println("Maximum: ");
+		int max = scan.nextInt();
+		control.filterByDurationOfFlight(min, max);
+	}
+
+	private static void filterByGate(FlightsControl control, Scanner scan) {
+		System.out.println("Enter desired gate number: ");
+		String gate = scan.next();
+		control.filterByGate(gate);
+	}
+
+	private static void filterByStatus(FlightsControl control, Scanner scan) {
+		System.out.println("Enter desired status: ");
+		String status = scan.next();
+		control.filterByStatus(eStatus.valueOf(status));
+	}
+
+	///Filter///
+
+	///show menus///
+
+	public static void showMainMenu() {
+		System.out.println("\nMENU: please enter the number of the desired action:");
+		System.out.println("0: EXIT");
+		System.out.println("1: Add Flight");
+		System.out.println("2: Cancel Flight");
+		System.out.println("3: Sort Flights");
+		System.out.println("4: Filter Flights");
+	}
+
+	public static void showSortMenu() {
+		System.out.println("0: Go Back To Menu");
+		System.out.println("1: Sort Flights By Date");
+		System.out.println("2: Sort Flights By Staying Duration");
+		System.out.println("3: Sort Flights By Duration Of Flight");
+		System.out.println("4: Sort By Status");
+	}
+
+	public static void showFilterMenu() {
+		System.out.println("0: Go Back To Menu");
+		System.out.println("1: Filter Flights By Air Line");
+		System.out.println("2: Filter Flights By Destination");
+		System.out.println("3: Filter Flights By Origin");
+		System.out.println("4: Filter Flights By Departure Date");
+		System.out.println("5: Filter Flights By Return Date");
+		System.out.println("6: Filter Flights By Duration Of Flight");
+		System.out.println("7: Filter Flights By Gate");
+		System.out.println("8: Filter Flights By Status");
+	}
+
+	///show menus///
+
+	public void hardCode() {
+		///hard code///
+
 		FlightsControl fc= new FlightsControl();
 		//1
 		LocalDate ld= LocalDate.of(2021, 5, 14);
@@ -87,98 +414,24 @@ public class ProgramHandle {
 		Flight f11 = new Flight("Air France", "Israel", "London", ld22, d11, ld23, "B1");
 		fc.addFlight(f11);
 
-		// testing
-		System.out.println(fc.showFlights()+"\n");
-		fc.sortFlightsByDurationOfflight();
-		System.out.println(fc.showFlights());
-
-		//
-
-	}
-	static int choice = 0;
-
-	public static boolean performMainAction(Scanner scan)  {
-		switch (choice) {
-		case 1:
-			return addFlight();
-		case 2:
-			return cancelFlight();
-		case 3:
-			return performSortAction();
-		case 4:
-			return performFilterAction();
-		case 5:
-			break;
-		}
+		///hard code///
 	}
 
-	public static boolean performSortAction(Scanner scan)  {
-		switch (choice) {
-		case 1:
-			return sortFlightsByDate();
-		case 2:
-			return sortFlightsByStayingDuration();
-		case 3:
-			return sortFlightsByDurationOfflight();
-		case 4:
-			return sortByStatus();
-		case 5:
-			return performMainAction();
-		}
+	public static boolean checkDate(int year, int month, int day) { // check if date is from now on
+		int currentYear = LocalDate.now().getYear();
+		int currentMonth = LocalDate.now().getMonthValue();
+		int currentDay = LocalDate.now().getDayOfMonth();
+
+		if (day < 1 || day > 31)
+			return false;
+		if (month < 1 || month > 12)
+			return false;
+		if (year < currentYear)
+			return false;
+		if (year == currentYear && month < currentMonth)
+			return false;
+		if (year == currentYear && month == currentMonth && day < currentDay)
+			return false;
+		return true;
 	}
-
-	public static boolean performFilterAction(Scanner scan)  {
-		switch (choice) {
-		case 1:
-			return filterByAirLine();
-		case 2:
-			return filterByDestination();
-		case 3:
-			return filterByOrigin();
-		case 4:
-			return filterByDepartureDate();
-		case 5:
-			return filterByReturnDate();
-		case 6:
-			return filterByDurationOfFlight();
-		case 7:
-			return filterByGate();
-		case 8:
-			return filterByStatus();
-		case 9:
-			return performMainAction();
-			
-		}
-	}
-	public static void showMenu() {
-		//main
-		System.out.println("\nMENU: please enter the number of the desired action:");
-		System.out.println("1: Add Flight");
-		System.out.println("2: Cancel Flight");
-		System.out.println("3: Sort Flights");
-		System.out.println("4: Filter Flights");
-		System.out.println("5: EXIT");
-
-		//Sort
-		System.out.println("1: Sort Flights By Date");
-		System.out.println("2: Sort Flights By Staying Duration");
-		System.out.println("3: Sort Flights By Duration Of Flight");
-		System.out.println("4: Sort By Status");
-		System.out.println("5: Go Back To Menu");
-
-
-		//Filter
-		System.out.println("1: Filter Flights By Air Line");
-		System.out.println("2: Filter Flights By Destination");
-		System.out.println("3: Filter Flights By Origin");
-		System.out.println("4: Filter Flights By Departure Date");
-		System.out.println("5: Filter Flights By Return Date");
-		System.out.println("6: Filter Flights By Duration Of Flight");
-		System.out.println("7: Filter Flights By Gate");
-		System.out.println("8: Filter Flights By Status");
-		System.out.println("9: Go Back To Menu");
-
-
-	}
-
 }

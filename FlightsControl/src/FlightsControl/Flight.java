@@ -22,6 +22,7 @@ public class Flight {
 	private eStatus status;
 	
 	public Flight(String airlineName, String origin, String destination, LocalDate departureDate, Duration durationOfFlight, LocalDate returnDate, String gate) {
+		
 		this.airlineName = airlineName;
 		this.origin = origin;
 		this.destination = destination;

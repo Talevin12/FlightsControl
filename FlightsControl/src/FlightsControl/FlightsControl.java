@@ -4,20 +4,30 @@ import java.io.PrintWriter;
 import java.time.Duration;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 import FlightsControl.Flight.eStatus;
 
 public class FlightsControl {
 	private ArrayList<Flight> flights;
-	ArrayList<Flight> presentationFlights;
+	private ArrayList<Flight> presentationFlights;
 
 	public FlightsControl() {
 		this.flights = new ArrayList<>();
 		this.presentationFlights = new ArrayList<>();
 	}
 	
+	public FlightsControl(Scanner scan) throws FileNotFoundException {
+		int flightsSize = scan.nextInt();
+		this.flights = new ArrayList<>(flightsSize);
+		for(int i = 0; i < flightsSize; i++) {
+			this.flights.set(i, new Flight(scan));
+		}
+	}
+	
 	public void save(String fileName) throws FileNotFoundException {
 		PrintWriter pw = new PrintWriter(fileName);
+		pw.write(this.flights.size() + "\n");
 		for(Flight flight : this.flights) {
 			flight.save(pw);
 		}
@@ -62,7 +72,7 @@ public class FlightsControl {
 		}
 	}
 	
-	public void sortByStatus() {
+	public void sortFlightsByStatus() {
 		int n = this.presentationFlights.size(); 
 		for (int i = 0; i < n-1; i++) {
 			for (int j = 0; j < n-i-1; j++) { 
@@ -79,7 +89,7 @@ public class FlightsControl {
 	
 	public void filterByAirLine(String airline) {
 		for(int i = 0; i < this.presentationFlights.size(); i++) {
-			if(this.presentationFlights.get(i).getAirline().equals(airline)) {
+			if(!this.presentationFlights.get(i).getAirline().equals(airline)) {
 				this.presentationFlights.remove(i);
 				i--;
 			}
@@ -88,7 +98,7 @@ public class FlightsControl {
 	
 	public void filterByDestination(String destination) {
 		for(int i = 0; i < this.presentationFlights.size(); i++) {
-			if(this.presentationFlights.get(i).getDestination().equals(destination)) {
+			if(!this.presentationFlights.get(i).getDestination().equals(destination)) {
 				this.presentationFlights.remove(i);
 				i--;
 			}
@@ -96,7 +106,7 @@ public class FlightsControl {
 	}
 	public void filterByOrigin(String origin) {
 		for(int i = 0; i < this.presentationFlights.size(); i++) {
-			if(this.presentationFlights.get(i).getOrigin().equals(origin)) {
+			if(!this.presentationFlights.get(i).getOrigin().equals(origin)) {
 				this.presentationFlights.remove(i);
 				i--;
 			}
@@ -104,7 +114,7 @@ public class FlightsControl {
 	}
 	public void filterByDepartureDate(LocalDate departureDate) {
 		for(int i = 0; i < this.presentationFlights.size(); i++) {
-			if(this.presentationFlights.get(i).getDepartureDate().equals(departureDate)) {
+			if(!this.presentationFlights.get(i).getDepartureDate().equals(departureDate)) {
 				this.presentationFlights.remove(i);
 				i--;
 			}
@@ -112,7 +122,7 @@ public class FlightsControl {
 	}
 	public void filterByReturnDate(LocalDate returnDate) {
 		for(int i = 0; i < this.presentationFlights.size(); i++) {
-			if(this.presentationFlights.get(i).getReturnDate().equals(returnDate)) {
+			if(!this.presentationFlights.get(i).getReturnDate().equals(returnDate)) {
 				this.presentationFlights.remove(i);
 				i--;
 			}
@@ -130,7 +140,7 @@ public class FlightsControl {
 	}
 	public void filterByGate(String gate) {
 		for(int i = 0; i < this.presentationFlights.size(); i++) {
-			if(this.presentationFlights.get(i).getGate().equals(gate)) {
+			if(!this.presentationFlights.get(i).getGate().equals(gate)) {
 				this.presentationFlights.remove(i);
 				i--;
 			}
@@ -138,7 +148,7 @@ public class FlightsControl {
 	}
 	public void filterByStatus(eStatus status) {
 		for(int i = 0; i < this.presentationFlights.size(); i++) {
-			if(this.presentationFlights.get(i).getStatus().equals(status)) {
+			if(!this.presentationFlights.get(i).getStatus().equals(status)) {
 				this.presentationFlights.remove(i);
 				i--;
 			}
@@ -150,6 +160,10 @@ public class FlightsControl {
 	
 	
 	/// arithmetic
+	
+	public ArrayList<Flight> getFlights() {
+		return this.flights;
+	}
 	
     public static String generateFlightNumber(int n) 
     { 
@@ -168,12 +182,26 @@ public class FlightsControl {
     }
 
 	public boolean addFlight(Flight flight) {
-		flight.setFlightNumber(generateFlightNumber(8));
+		String flightNum = "";
+		boolean b = false;
+		while(!b) {
+			flightNum = generateFlightNumber(8);
+			if(!isFlightNumExist(flightNum))
+				b = true;
+		}
+		flight.setFlightNumber(flightNum);
 		this.flights.add(flight);
 		this.presentationFlights.add(flight);
 		return true;
 	} 
 	
+	private boolean isFlightNumExist(String flightNum) {
+		for(Flight flight : this.flights)
+			if(flight.getFlightNumber().equals(flightNum))
+				return true;
+		return false;
+	}
+
 	public boolean cancelFlight(String flightNumber) {
 		for(int i = 0; i < this.flights.size(); i++) {
 			if(this.flights.get(i).getFlightNumber().equals(flightNumber)) {
@@ -215,7 +243,7 @@ public class FlightsControl {
 	public String showFlights() {
 		StringBuffer str = new StringBuffer("Flights: \n");
 		for(int i = 0; i < presentationFlights.size(); i++) {
-			str.append(presentationFlights.get(i).toString() + "\n");
+			str.append((i+1) +"- "+presentationFlights.get(i).toString() + "\n");
 		}
 		
 		return str.toString();

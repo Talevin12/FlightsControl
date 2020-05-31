@@ -1,48 +1,19 @@
 package FlightsControl;
+
+import java.io.FileNotFoundException;
 import java.util.Scanner;
 
 public class program {
 
-	public static void main(String[] args) {
-		Scanner scn = new Scanner(System.in);
-		FlightsControl flightsControl = new FlightsControl();
-
-		System.out.println("Hello, Welcome to TalAirport Flights control system!");
+	public static void main(String[] args) throws FileNotFoundException {
+//		String fileName  = "FlightsControl\\FlightControlFile.txt";
+//		Scanner scanFile = new Scanner(fileName);
+//		FlightsControl controlFile = new FlightsControl(scanFile);
+//		ProgramHandle.performMainAction(controlFile, scanFile);
 		
-//			 int id;
-//			 String airlineName;
-//			 String origin;
-//			 String destination;
-//			 LocalDate flightDate;
-//			 LocalDate arrivalDate;
-//			 Period durationOfFlight;
-//			 String gate;
-//
-//			System.out.println("Enter flight id: ");
-//			id = scn.nextInt();
-//			System.out.println("Enter the airline name that you like to: ");
-//			airlineName = scn.next();
-//			System.out.println("Enter origin city: ");
-//			origin = scn.next();
-//			System.out.println("Enter destination: ");
-//			destination = scn.next();
-//			System.out.println("Enter flight date: (Year (Enter) Month (Enter) Day (Enter))");
-//			flightDate = LocalDate.of(scn.nextInt(), scn.nextInt(), scn.nextInt());
-//			System.out.println("Enter arrival date: (Year (Enter) Month (Enter) Day (Enter))");
-//			arrivalDate = LocalDate.of(scn.nextInt(), scn.nextInt(), scn.nextInt());
-//			System.out.println("Enter gate number: ");
-//			gate = scn.next();
-//			
-			//flight = new Flight(airlineName, origin, destination, flightDate, arrivalDate, gate);
-			
-		//	flightsControl.addFlight(flight);
-//			
-//			System.out.println(flightsControl.toString());
-//			
-//			System.out.println("Thank you have a nice day! :)");
 		
-		}
-	
-	
-	
+		FlightsControl controlSystem = new FlightsControl();
+		Scanner scanSystem = new Scanner(System.in);
+		ProgramHandle.performMainAction(controlSystem, scanSystem);
+	}
 }
