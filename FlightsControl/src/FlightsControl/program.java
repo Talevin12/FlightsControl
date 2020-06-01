@@ -14,6 +14,6 @@ public class program {
 		
 		FlightsControl controlSystem = new FlightsControl();
 		Scanner scanSystem = new Scanner(System.in);
-		ProgramHandle.performMainAction(controlSystem, scanSystem);
+		ProgramHandle.startMain(controlSystem, scanSystem);
 	}
 }

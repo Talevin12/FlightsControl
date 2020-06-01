@@ -8,7 +8,7 @@ import java.time.LocalTime;
 import java.util.Scanner;
 
 public class Flight {
-	public static enum eStatus {OnTime, Delayed, Canceled}
+	public static enum eStatus {OnTime, Canceled}
 	
 	private String flightNumber;
 	private String airlineName;

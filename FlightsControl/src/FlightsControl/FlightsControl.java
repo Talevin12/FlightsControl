@@ -155,7 +155,9 @@ public class FlightsControl {
 		}
 	}
 	
-	
+	public void removeFilters() {
+		this.presentationFlights = this.flights;
+	}
 	
 	
 	
@@ -212,40 +214,50 @@ public class FlightsControl {
 		return false;
 	}
 	
-	public boolean cancelFlight(String flightNumber, LocalDate newDate) {
+	private void refresh() {
+		Flight temp = null;
+		
 		for(int i = 0; i < this.flights.size(); i++) {
-			if(this.flights.get(i).getFlightNumber().equals(flightNumber)) {
-				this.flights.get(i).setStatus(eStatus.Delayed);
-				this.flights.get(i).setDepartureDate(newDate);
-				return true;
+			if(!this.flights.get(i).getFlightDate().isAfter(LocalDate.now())) {
+				temp = this.flights.get(i);
+				this.flights.remove(i);
+				i--;
+				removeFlightFromPresentList(temp);
 			}
 		}
-		return false;
 	}
-	
-	private void refresh() {
-		for(int i = 0; i < this.flights.size(); i++) {
-			if(this.flights.get(i).getFlightDate().isAfter(LocalDate.now()))
-				this.flights.remove(i);
-			if(this.flights.get(i).getStatus().equals(eStatus.Canceled))
-				this.flights.remove(i);
+
+	private void removeFlightFromPresentList(Flight flight) {
+		for(int i = 0; i < this.presentationFlights.size(); i++) {
+			if(this.presentationFlights.get(i).equals(flight))
+				this.presentationFlights.remove(i);
 		}
 	}
 	
 	///Displaying
-	
-	@Override
-	public String toString() {
-		refresh();
-		return this.flights.toString();
-	}
-	
+
 	public String showFlights() {
+		refresh();
+		
 		StringBuffer str = new StringBuffer("Flights: \n");
 		for(int i = 0; i < presentationFlights.size(); i++) {
 			str.append((i+1) +"- "+presentationFlights.get(i).toString() + "\n");
 		}
 		
+		return str.toString();
+	}
+	
+	public String showOnTimeFlights() {
+		refresh();
+		int index = 1;
+		
+		StringBuffer str = new StringBuffer("Flights: \n");
+		for(int i = 0; i < flights.size(); i++) {
+			if(this.flights.get(i).getStatus().equals(eStatus.OnTime)) {
+				str.append((index) +"- "+flights.get(i).toString() + "\n");
+				index++;
+			}
+		}
 		return str.toString();
 	}
 }
