@@ -8,29 +8,30 @@ import java.time.LocalTime;
 import java.util.Scanner;
 
 public class Flight {
+	public static enum eType {Departure, Arrival}
 	public static enum eStatus {OnTime, Canceled}
 	
 	private String flightNumber;
+	private eType flightType;
 	private String airlineName;
-	private String origin;
-	private String destination;
-	private LocalDate departureDate;
-	private Duration durationOfFlight;
-	private LocalDate returnDate;
-	private Duration stayingDuarion;
+	private String country;
+	private String city;
+	private String airport;
+	private LocalDate flightDate;
+	private Duration flightDuration;
 	private String gate;
 	private eStatus status;
 	
-	public Flight(String airlineName, String origin, String destination, LocalDate departureDate, Duration durationOfFlight, LocalDate returnDate, String gate) {
-		
+	public Flight(String airlineName, eType flightType, String country, String city, String airport, LocalDate flightDate, Duration durationOfFlight, String gate) {
 		this.airlineName = airlineName;
-		this.origin = origin;
-		this.destination = destination;
+		this.flightType = flightType;
 		
-		this.departureDate = departureDate;
-		this.returnDate = returnDate;
-		this.durationOfFlight = durationOfFlight;
-		this.stayingDuarion = Duration.between(LocalDateTime.of(departureDate, LocalTime.of(0,0)), LocalDateTime.of(returnDate, LocalTime.of(0,0)));
+		this.country = country;
+		this.city = city;
+		this.airport = airport;
+		
+		this.flightDate = flightDate;
+		this.flightDuration = durationOfFlight;
 
 		this.gate = gate;
 		this.status = eStatus.OnTime;
@@ -38,13 +39,15 @@ public class Flight {
 	
 	public Flight(Scanner scan) throws FileNotFoundException {
 		this.airlineName = scan.nextLine();
-		this.origin = scan.nextLine();
-		this.destination = scan.nextLine();
+		this.flightType = eType.valueOf(scan.next());
+		scan.nextLine();
 		
-		this.departureDate = LocalDate.of(scan.nextInt(), scan.nextInt(), scan.nextInt());
-		this.returnDate = LocalDate.of(scan.nextInt(), scan.nextInt(), scan.nextInt());
-		this.durationOfFlight = Duration.ofMinutes(scan.nextInt());
-		this.stayingDuarion = Duration.between(departureDate, returnDate);
+		this.country = scan.nextLine();
+		this.city = scan.nextLine();
+		this.airport = scan.nextLine();
+		
+		this.flightDate = LocalDate.of(scan.nextInt(), scan.nextInt(), scan.nextInt());
+		this.flightDuration = Duration.ofMinutes(scan.nextInt());
 		
 		scan.nextLine();
 		this.gate = scan.next();
@@ -53,13 +56,16 @@ public class Flight {
 	}
 	
 	public void save(PrintWriter pw) throws FileNotFoundException {
-		pw.write(this.airlineName + "\n");
-		pw.write(this.origin +"\n");
-		pw.write(this.destination +"\n");
+		pw.write(this.flightNumber + "\t");
+		pw.write(this.airlineName + "\t");
+		pw.write(this.flightType.toString() + "\t");
 		
-		pw.write(this.departureDate.getYear() +" "+ this.departureDate.getMonth() +" "+ this.departureDate.getDayOfMonth() +"\n");
-		pw.write(this.returnDate.getYear() +" "+ this.returnDate.getMonth() +" "+ this.returnDate.getDayOfMonth() +"\n");
-		pw.write((int)this.durationOfFlight.toMinutes() +"\n");
+		pw.write(this.country +"\t");
+		pw.write(this.city + "\t");
+		pw.write(this.airport + "\t");
+		
+		pw.write(this.flightDate.getYear() +" "+ this.flightDate.getMonth() +" "+ this.flightDate.getDayOfMonth() +"\n");
+		pw.write((int)this.flightDuration.toMinutes() +"\n");
 		
 		pw.write(this.gate +"\n");
 		pw.write(this.status.toString() +"\n");
@@ -70,11 +76,11 @@ public class Flight {
 	}
 
 	public LocalDate getFlightDate() {
-		return this.departureDate;
+		return this.flightDate;
 	}
 	
 	public Duration getDurationOfFlight() {
-		return this.durationOfFlight;
+		return this.flightDuration;
 	}
 
 	public eStatus getStatus() {
@@ -89,39 +95,24 @@ public class Flight {
 		this.status = status;
 	}
 
-	public void setDepartureDate(LocalDate newDate) {
-		this.departureDate = newDate;
+	public void setFlightDate(LocalDate newDate) {
+		this.flightDate = newDate;
 	}
 	
 	@Override
 	public String toString() {
 		String str = "Flight number: "+ this.flightNumber + " "
 				   + "of Airline: "+ this.airlineName +" | "
-				   + "Departure from: "+ this.origin +" "
+				   + this.flightType.toString() +" from: "+ this.airport +" airport- "+ this.city +", "+ this.country
 				   + "in gate: "+ this.gate +" "
-				   + "at "+ this.departureDate.toString() +" | "
-				   + "Landing in: "+ this.destination +" "
-				   + "and returning at :"+ this.returnDate.toString() +" | "
-				   + "Duration of flights: "+ this.durationOfFlight.toMinutes() +" minutes | "
-				   + "Duration of staying: "+ stayingDuarion.toDays() +" days | "
+				   + "at "+ this.flightDate.toString() +" | "
+				   + "Flight duration: "+ this.flightDuration.toMinutes() +" minutes | "
 				   + "Current status: "+ this.status.toString();
 		return str;
 	}
 
 	public String getDestination() {
-		return this.destination;
-	}
-
-	public String getOrigin() {
-		return this.origin;
-	}
-
-	public LocalDate getDepartureDate() {
-		return this.departureDate;
-	}
-	
-	public LocalDate getReturnDate() {
-		return this.returnDate;
+		return this.country;
 	}
 
 	public String getAirline() {
@@ -132,7 +123,7 @@ public class Flight {
 		return this.gate;
 	}
 
-	public Duration getStayingDuratuin() {
-		return this.stayingDuarion;
+	public eType getType() {
+		return this.flightType;
 	}
 }

@@ -45,12 +45,12 @@ public class FlightsControl {
 			}
 		}
 	}
-	
-	public void sortFlightsByStayingDuration() {
+
+	public void sortFlightsByFlightType(){
 		int n = this.presentationFlights.size(); 
 		for (int i = 0; i < n-1; i++) {
 			for (int j = 0; j < n-i-1; j++) { 
-				if ((this.presentationFlights.get(j).getStayingDuratuin().toDays() - this.presentationFlights.get(j+1).getStayingDuratuin().toDays()) > 0) { 
+				if (this.presentationFlights.get(j).getType().ordinal() > this.presentationFlights.get(j+1).getType().ordinal()) { 
 					Flight temp = this.presentationFlights.get(j); 
 					this.presentationFlights.set(j, this.presentationFlights.get(j+1)); 
 					this.presentationFlights.set(j+1, temp); 
@@ -58,7 +58,7 @@ public class FlightsControl {
 			}
 		}
 	}
-
+	
 	public void sortFlightsByDurationOfflight(){
 		int n = this.presentationFlights.size(); 
 		for (int i = 0; i < n-1; i++) {
@@ -96,38 +96,42 @@ public class FlightsControl {
 		}
 	}
 	
-	public void filterByDestination(String destination) {
+	public void filterByCity(String city) {
 		for(int i = 0; i < this.presentationFlights.size(); i++) {
-			if(!this.presentationFlights.get(i).getDestination().equals(destination)) {
+			if(!this.presentationFlights.get(i).getDestination().equals(city)) {
 				this.presentationFlights.remove(i);
 				i--;
 			}
 		}
 	}
-	public void filterByOrigin(String origin) {
+	
+	public void filterByAirport(String airport) {
 		for(int i = 0; i < this.presentationFlights.size(); i++) {
-			if(!this.presentationFlights.get(i).getOrigin().equals(origin)) {
+			if(!this.presentationFlights.get(i).getDestination().equals(airport)) {
 				this.presentationFlights.remove(i);
 				i--;
 			}
 		}
 	}
-	public void filterByDepartureDate(LocalDate departureDate) {
+	
+	public void filterByCountry(String country) {
 		for(int i = 0; i < this.presentationFlights.size(); i++) {
-			if(!this.presentationFlights.get(i).getDepartureDate().equals(departureDate)) {
+			if(!this.presentationFlights.get(i).getDestination().equals(country)) {
 				this.presentationFlights.remove(i);
 				i--;
 			}
 		}
 	}
-	public void filterByReturnDate(LocalDate returnDate) {
+
+	public void filterByFlighteDateMargin(LocalDate start, LocalDate end) {
 		for(int i = 0; i < this.presentationFlights.size(); i++) {
-			if(!this.presentationFlights.get(i).getReturnDate().equals(returnDate)) {
+			if(!(this.presentationFlights.get(i).getFlightDate().isAfter(start) && this.presentationFlights.get(i).getFlightDate().isBefore(end))) {
 				this.presentationFlights.remove(i);
 				i--;
 			}
 		}
 	}
+	
 	public void filterByDurationOfFlight(int minHoursFlightDuration, int maxHoursFlightDuration) {
 		Duration duration;
 		for(int i = 0; i < this.presentationFlights.size(); i++) {
