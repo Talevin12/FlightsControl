@@ -14,7 +14,7 @@ public class ControlTest {
 
 	@Test
 	public void addFlightTest() {
-
+		
 	}
 
 	private FlightsControl createControl() {
