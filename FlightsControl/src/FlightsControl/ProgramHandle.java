@@ -109,7 +109,11 @@ public class ProgramHandle {
 		boolean b = false;
 		while(!b) {
 			System.out.println("Choose a flight to cancel");
-			System.out.println(control.showOnTimeFlights());
+			
+			control.filterByStatus(eStatus.OnTime);
+			System.out.println(control.showFlights());
+			control.removeFilters();
+			
 			flightChoice = scan.nextInt();
 			if(flightChoice >= 1 || flightChoice <= control.getFlights().size())
 				b = true;
@@ -184,7 +188,7 @@ public class ProgramHandle {
 			System.out.println(control.showFlights());
 			return true;
 		case 1:
-			filterByAirLine(control, scan);
+			filterByAirline(control, scan);
 			return performFilterAction(control, scan);
 		case 2:
 			filterByCountry(control, scan);
@@ -217,7 +221,7 @@ public class ProgramHandle {
 		}
 	}
 
-	private static void filterByAirLine(FlightsControl control, Scanner scan) {
+	private static void filterByAirline(FlightsControl control, Scanner scan) {
 		System.out.println("Enter desired air line: ");
 		scan.nextLine();
 		String airline = scan.nextLine();

@@ -96,9 +96,18 @@ public class FlightsControl {
 		}
 	}
 	
+	public void filterByCountry(String country) {
+		for(int i = 0; i < this.presentationFlights.size(); i++) {
+			if(!this.presentationFlights.get(i).getDestination().equals(country)) {
+				this.presentationFlights.remove(i);
+				i--;
+			}
+		}
+	}
+	
 	public void filterByCity(String city) {
 		for(int i = 0; i < this.presentationFlights.size(); i++) {
-			if(!this.presentationFlights.get(i).getDestination().equals(city)) {
+			if(!this.presentationFlights.get(i).getCity().equals(city)) {
 				this.presentationFlights.remove(i);
 				i--;
 			}
@@ -107,16 +116,7 @@ public class FlightsControl {
 	
 	public void filterByAirport(String airport) {
 		for(int i = 0; i < this.presentationFlights.size(); i++) {
-			if(!this.presentationFlights.get(i).getDestination().equals(airport)) {
-				this.presentationFlights.remove(i);
-				i--;
-			}
-		}
-	}
-	
-	public void filterByCountry(String country) {
-		for(int i = 0; i < this.presentationFlights.size(); i++) {
-			if(!this.presentationFlights.get(i).getDestination().equals(country)) {
+			if(!this.presentationFlights.get(i).getAirport().equals(airport)) {
 				this.presentationFlights.remove(i);
 				i--;
 			}
@@ -169,6 +169,10 @@ public class FlightsControl {
 	
 	public ArrayList<Flight> getFlights() {
 		return this.flights;
+	}
+	
+	public ArrayList<Flight> getPresentationFlights() {
+		return this.presentationFlights;
 	}
 	
     public static String generateFlightNumber(int n) 
@@ -251,17 +255,17 @@ public class FlightsControl {
 		return str.toString();
 	}
 	
-	public String showOnTimeFlights() {
-		refresh();
-		int index = 1;
-		
-		StringBuffer str = new StringBuffer("Flights: \n");
-		for(int i = 0; i < flights.size(); i++) {
-			if(this.flights.get(i).getStatus().equals(eStatus.OnTime)) {
-				str.append((index) +"- "+flights.get(i).toString() + "\n");
-				index++;
-			}
-		}
-		return str.toString();
-	}
+//	public String showOnTimeFlights() {
+//		refresh();
+//		int index = 1;
+//		
+//		StringBuffer str = new StringBuffer("Flights: \n");
+//		for(int i = 0; i < flights.size(); i++) {
+//			if(this.flights.get(i).getStatus().equals(eStatus.OnTime)) {
+//				str.append((index) +"- "+flights.get(i).toString() + "\n");
+//				index++;
+//			}
+//		}
+//		return str.toString();
+//	}
 }

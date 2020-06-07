@@ -103,7 +103,7 @@ public class Flight {
 	public String toString() {
 		String str = "Flight number: "+ this.flightNumber + " "
 				   + "of Airline: "+ this.airlineName +" | "
-				   + this.flightType.toString() +" from: "+ this.airport +" airport- "+ this.city +", "+ this.country
+				   + this.flightType.toString() +" from: "+ this.airport +" airport- "+ this.city +", "+ this.country +" "
 				   + "in gate: "+ this.gate +" "
 				   + "at "+ this.flightDate.toString() +" | "
 				   + "Flight duration: "+ this.flightDuration.toMinutes() +" minutes | "
@@ -125,5 +125,13 @@ public class Flight {
 
 	public eType getType() {
 		return this.flightType;
+	}
+
+	public String getCity() {
+		return this.city;
+	}
+
+	public String getAirport() {
+		return this.airport;
 	}
 }
