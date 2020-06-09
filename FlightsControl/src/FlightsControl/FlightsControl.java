@@ -266,7 +266,7 @@ public class FlightsControl {
 		
 		StringBuffer str = new StringBuffer("<h2>Flights:</h2> <br>");
 		str.append("<table style='width:100%'>");
-		str.append("<tr align='center'><th>Airline</th>");
+		str.append("<tr align='left'><th>Airline</th>");
 		str.append("<th>Flight number</th>");
 		str.append("<th>Flight date</th>");
 		str.append("<th>Flight day</th>");
