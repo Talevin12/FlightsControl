@@ -14,7 +14,7 @@ public class ProgramHandle {
 		System.out.println("---------------------HELLO AND WELCOME----------------------");
 		System.out.println("--------------You Enter To FlightControlApp 2.0--------------");
 		System.out.println("Lets get started!");
-		hardCode(control);
+		control.addHardCode();
 
 		while(choice != 10)
 			showMainMenu(control, scan);
@@ -54,7 +54,6 @@ public class ProgramHandle {
 		int month = 0;
 		int day = 0;
 		LocalDate flightDate;
-		Duration durationOfFlight;
 		String gate;
 		boolean b = false;
 		scan.nextLine();
@@ -93,14 +92,12 @@ public class ProgramHandle {
 
 		flightDate = LocalDate.of(year, month, day); 
 
-		System.out.println("Enter the duration of the flight (In minutes): ");
-		durationOfFlight = Duration.ofMinutes(scan.nextInt());
 
 		scan.nextLine();
 		System.out.println("Enter gate number (ex: A1)");
 		gate = scan.next();
 
-		Flight flight = new Flight(airlineName, flightType, country, city, airport, flightDate, durationOfFlight, gate);
+		Flight flight = new Flight(airlineName, flightType, country, city, airport, flightDate, gate);
 		return control.addFlight(flight);
 	}
 
@@ -142,9 +139,6 @@ public class ProgramHandle {
 			sortFlightsByFlightType(control);
 			return true;
 		case 3:
-			sortFlightsByDurationOfflight(control);
-			return true;
-		case 4:
 			sortFlightsByStatus(control);
 			return true;
 		default:
@@ -161,11 +155,6 @@ public class ProgramHandle {
 	private static void sortFlightsByFlightType(FlightsControl control) {
 		control.sortFlightsByFlightType();
 		System.out.println(control.showFlights());	
-	}
-
-	private static void sortFlightsByDurationOfflight(FlightsControl control) {
-		control.sortFlightsByDurationOfflight();
-		System.out.println(control.showFlights());
 	}
 
 	private static void sortFlightsByStatus(FlightsControl control) {
@@ -203,7 +192,7 @@ public class ProgramHandle {
 			filterByFlightDate(control, scan);
 			return performFilterAction(control, scan);
 		case 6:
-			filterByDurationOfFlight(control, scan);
+			filterByDayOfWeek(control, scan);
 			return performFilterAction(control, scan);
 		case 7:
 			filterByGate(control, scan);
@@ -292,17 +281,13 @@ public class ProgramHandle {
 
 		LocalDate start = LocalDate.of(year1, month1, day1);
 		LocalDate end = LocalDate.of(year2, month2, day2);
-		control.filterByFlighteDateMargin(start, end);
+		control.filterByFlightDateMargin(start, end);
 	}
-
-
-	private static void filterByDurationOfFlight(FlightsControl control, Scanner scan) {
-		System.out.println("Enter desired min and max minutes for flight duration: ");
-		System.out.println("Minimum: ");
-		int min = scan.nextInt();
-		System.out.println("Maximum: ");
-		int max = scan.nextInt();
-		control.filterByDurationOfFlight(min, max);
+	
+	private static void filterByDayOfWeek(FlightsControl control, Scanner scan) {
+		System.out.println("Enter desired day of week: ");
+		String dayOfWeek = scan.next();
+		control.filterByDayOfWeek(dayOfWeek);
 	}
 
 	private static void filterByGate(FlightsControl control, Scanner scan) {
@@ -345,8 +330,7 @@ public class ProgramHandle {
 		System.out.println("0: Go Back To Menu");
 		System.out.println("1: Sort Flights By Date");
 		System.out.println("2: Sort Flights By Flight Type");
-		System.out.println("3: Sort Flights By Duration Of Flight");
-		System.out.println("4: Sort By Status");
+		System.out.println("3: Sort By Status");
 	}
 
 	private static void showFilterMenu() {
@@ -357,80 +341,13 @@ public class ProgramHandle {
 		System.out.println("3: Filter Flights By City");
 		System.out.println("4: Filter Flights By Airport");
 		System.out.println("5: Filter Flights By Flight Date");
-		System.out.println("6: Filter Flights By Duration Of Flight");
+		System.out.println("6: Filter Flights By Day Of week");
 		System.out.println("7: Filter Flights By Gate");
 		System.out.println("8: Filter Flights By Status");
 		System.out.println("9: Remove Filters");
 	}
 
 	///show menus///
-
-	private static void hardCode(FlightsControl control) {
-		///hard code///
-
-		//1
-		LocalDate ld= LocalDate.of(2021, 5, 14);
-		Duration d= Duration.ofMinutes(420);
-		Flight f = new Flight("El Al", eType.Departure, "Spain", "Madrid", "Barajas", ld, d, "A1");
-		control.addFlight(f);
-		//2
-		LocalDate ld1= LocalDate.of(2021, 6, 26);
-		Duration d1= Duration.ofMinutes(650);
-		Flight f1 = new Flight("Air France", eType.Arrival, "France", "Paris", "Charles de Gaulle", ld1, d1, "B5");
-		control.addFlight(f1);
-		//3
-		LocalDate ld2= LocalDate.of(2021, 1, 10);
-		Duration d2= Duration.ofMinutes(500);
-		Flight f2 = new Flight("Air India", eType.Departure, "India", "Delhi", "Indira Gandhi", ld2, d2, "C2");
-		control.addFlight(f2);
-		//4
-		LocalDate ld3= LocalDate.of(2021, 4, 10);
-		Duration d3= Duration.ofMinutes(160);
-		Flight f3 = new Flight("Turkish Airlines", eType.Departure, "Turkey", "Istanbul", "Istanbul", ld3, d3, "A2");
-		control.addFlight(f3);
-		//5
-		LocalDate ld4= LocalDate.of(2021, 3, 28);
-		Duration d4= Duration.ofMinutes(650);
-		Flight f4 = new Flight("Air Canada", eType.Arrival, "Canada", "Toronto", "Pearson", ld4, d4, "B2");
-		control.addFlight(f4);
-		//6
-		LocalDate ld5= LocalDate.of(2021, 8, 16);
-		Duration d5= Duration.ofMinutes(900);
-		Flight f5 = new Flight("Thai Airways", eType.Arrival, "Thailand", "Bangkok", "Suvarnabhumi ", ld5, d5, "C1");
-		control.addFlight(f5);
-		//7
-		LocalDate ld6= LocalDate.of(2021, 10, 10);
-		Duration d6= Duration.ofMinutes(450);
-		Flight f6 = new Flight("Pegasus Airlines", eType.Departure, "Greece", "Athens", "Eleftherios Venizelos", ld6, d6, "C3");
-		control.addFlight(f6);
-		//8 
-		LocalDate ld7= LocalDate.of(2021, 12, 3);
-		Duration d7= Duration.ofMinutes(200);
-		Flight f7 = new Flight("Israir", eType.Arrival, "Italy", "Rome", "Aeroporto Leonardo da Vinci di Fiumicino", ld7, d7, "A3");
-		control.addFlight(f7);
-		//9
-		LocalDate ld8= LocalDate.of(2021, 7, 28);
-		Duration d8= Duration.ofMinutes(700);
-		Flight f8 = new Flight("Vietnam Airlines", eType.Departure, "Vietnam", "Hanoi", "Noi Bai", ld8, d8, "B3");
-		control.addFlight(f8);
-		//10
-		LocalDate ld9= LocalDate.of(2021, 2, 7);
-		Duration d9= Duration.ofMinutes(940);
-		Flight f9 = new Flight("El Al", eType.Departure, "Austria", "Vienna", "Vienna", ld9, d9, "A1");
-		control.addFlight(f9);
-		//11
-		LocalDate ld10= LocalDate.of(2021, 4, 15);
-		Duration d10= Duration.ofMinutes(25);
-		Flight f10 = new Flight("Turkish Airlines", eType.Arrival, "United States", "New York", "JFK", ld10, d10, "B1");
-		control.addFlight(f10);
-		//12
-		LocalDate ld11= LocalDate.of(2021, 5, 19);
-		Duration d11= Duration.ofMinutes(360);
-		Flight f11 = new Flight("El Al", eType.Departure, "England", "London", "Heathrow", ld11, d11, "B17");
-		control.addFlight(f11);
-
-		///hard code///
-	}
 
 	private static boolean checkDate(int year, int month, int day) { // check if date is from now on
 		int currentYear = LocalDate.now().getYear();

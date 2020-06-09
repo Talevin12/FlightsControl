@@ -18,11 +18,10 @@ public class Flight {
 	private String city;
 	private String airport;
 	private LocalDate flightDate;
-	private Duration flightDuration;
 	private String gate;
 	private eStatus status;
 	
-	public Flight(String airlineName, eType flightType, String country, String city, String airport, LocalDate flightDate, Duration durationOfFlight, String gate) {
+	public Flight(String airlineName, eType flightType, String country, String city, String airport, LocalDate flightDate, String gate) {
 		this.airlineName = airlineName;
 		this.flightType = flightType;
 		
@@ -31,7 +30,6 @@ public class Flight {
 		this.airport = airport;
 		
 		this.flightDate = flightDate;
-		this.flightDuration = durationOfFlight;
 
 		this.gate = gate;
 		this.status = eStatus.OnTime;
@@ -47,7 +45,6 @@ public class Flight {
 		this.airport = scan.nextLine();
 		
 		this.flightDate = LocalDate.of(scan.nextInt(), scan.nextInt(), scan.nextInt());
-		this.flightDuration = Duration.ofMinutes(scan.nextInt());
 		
 		scan.nextLine();
 		this.gate = scan.next();
@@ -65,7 +62,6 @@ public class Flight {
 		pw.write(this.airport + "\t");
 		
 		pw.write(this.flightDate.getYear() +" "+ this.flightDate.getMonth() +" "+ this.flightDate.getDayOfMonth() +"\n");
-		pw.write((int)this.flightDuration.toMinutes() +"\n");
 		
 		pw.write(this.gate +"\n");
 		pw.write(this.status.toString() +"\n");
@@ -77,10 +73,6 @@ public class Flight {
 
 	public LocalDate getFlightDate() {
 		return this.flightDate;
-	}
-	
-	public Duration getDurationOfFlight() {
-		return this.flightDuration;
 	}
 
 	public eStatus getStatus() {
@@ -105,10 +97,23 @@ public class Flight {
 				   + "of Airline: "+ this.airlineName +" | "
 				   + this.flightType.toString() +" from: "+ this.airport +" airport- "+ this.city +", "+ this.country +" "
 				   + "in gate: "+ this.gate +" "
-				   + "at "+ this.flightDate.toString() +" | "
-				   + "Flight duration: "+ this.flightDuration.toMinutes() +" minutes | "
+				   + "at "+ this.flightDate.toString() +", "
+				   + this.flightDate.getDayOfWeek() +" minutes | "
 				   + "Current status: "+ this.status.toString();
 		return str;
+	}
+	public String toStringTable() {
+		StringBuffer str = new StringBuffer();
+		str.append("<td>"+ airlineName +"</td>");
+		str.append("<td>"+ flightNumber +"</td>");
+		str.append("<td>"+ flightDate +"</td>");
+		str.append("<td>"+ flightDate.getDayOfWeek() +"</td>");
+		str.append("<td>"+ country +"</td>");
+		str.append("<td>"+ airport +"</td>");
+		str.append("<td>"+ city +"</td>");
+		str.append("<td>"+ gate +"</td>");
+		str.append("<td>"+ status +"</td>");
+		return str.toString();
 	}
 
 	public String getDestination() {
