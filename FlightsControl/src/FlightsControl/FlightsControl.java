@@ -28,11 +28,25 @@ public class FlightsControl {
 	
 	public void save(String fileName) throws FileNotFoundException {
 		PrintWriter pw = new PrintWriter(fileName);
-		pw.write(this.flights.size() + "\n");
+		pw.println("Total flights: "+this.flights.size() + "\n");
 		for(Flight flight : this.flights) {
 			flight.save(pw);
 		}
+		pw.close();
 	}
+	
+	/// save data to file///
+	
+	public void save(PrintWriter pw) throws FileNotFoundException {
+		pw.println(this.flights.size() + "\n");
+		for(Flight flight : this.flights) {
+			flight.save(pw);
+		}
+		pw.close();
+	}
+	/// save data to file///
+	
+
 	///Sorting
 	public void sortFlightsByDate(){
 		int n = this.presentationFlights.size(); 

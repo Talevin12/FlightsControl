@@ -13,33 +13,33 @@ public class program {
 		if(args.length > 0) {
 			FlightsControl control = new FlightsControl();
 			control.addHardCode();
-//			boolean isHtml = args[0].equalsIgnoreCase("html");
+			//			boolean isHtml = args[0].equalsIgnoreCase("html");
 			boolean isDepartures = args.length > 1 && args[1].equalsIgnoreCase("departures");
 			if (isDepartures) {
 				System.out.println("<h1>Departures</h1");
 				control.removeFilters();
 				control.filterByFlightType(eType.Departure);
-//				control.filterByArgs(airline, country, city, airport, startDate, endDate, dayOFWeek, gate, status);
+				//				control.filterByArgs(airline, country, city, airport, startDate, endDate, dayOFWeek, gate, status);
 				System.out.println(control.showFlightsTable());
 			}
 			else {
 				System.out.println("<h1>Arrivals</h1");
 				control.removeFilters();
 				control.filterByFlightType(eType.Arrival);
-//				control.filterByArgs(airline, country, city, airport, startDate, endDate, dayOFWeek, gate, status);
+				//				control.filterByArgs(airline, country, city, airport, startDate, endDate, dayOFWeek, gate, status);
 				System.out.println(control.showFlightsTable());
 			}
 		}
-//		else {
-//			//		String fileName  = "FlightsControl\\FlightControlFile.txt";
-//			//		Scanner scanFile = new Scanner(fileName);
-//			//		FlightsControl controlFile = new FlightsControl(scanFile);
-//			//		ProgramHandle.performMainAction(controlFile, scanFile);
-//
-//
-//			FlightsControl controlSystem = new FlightsControl();
-//			Scanner scanSystem = new Scanner(System.in);
-//			ProgramHandle.startMain(controlSystem, scanSystem);
-//		}
+		//		else {
+		//		String fileName  = "FlightsControl\\FlightControlFile.txt";
+		//		Scanner scanFile = new Scanner(fileName);
+		//		FlightsControl controlFile = new FlightsControl(scanFile);
+		//		ProgramHandle.performMainAction(controlFile, scanFile);
+
+		FlightsControl controlSystem = new FlightsControl();
+		Scanner scanSystem = new Scanner(System.in);
+		ProgramHandle.startMain(controlSystem, scanSystem);
 	}
+	
+
 }

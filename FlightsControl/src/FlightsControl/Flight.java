@@ -52,19 +52,20 @@ public class Flight {
 		this.status = eStatus.valueOf(scan.next());
 	}
 	
-	public void save(PrintWriter pw) throws FileNotFoundException {
-		pw.write(this.flightNumber + "\t");
-		pw.write(this.airlineName + "\t");
-		pw.write(this.flightType.toString() + "\t");
+	public void save(PrintWriter pw) throws FileNotFoundException { // from write to println 
+		pw.print("Flight number: "+this.flightNumber + "\t");
+		pw.print("of Airline: "+this.airlineName+" ");
+		pw.print("| "+this.flightType.toString() + "-->");
 		
-		pw.write(this.country +"\t");
-		pw.write(this.city + "\t");
-		pw.write(this.airport + "\t");
+		pw.print(this.airport + "-");
+		pw.print(this.city + "-");
+		pw.print(this.country +"- |");
 		
-		pw.write(this.flightDate.getYear() +" "+ this.flightDate.getMonth() +" "+ this.flightDate.getDayOfMonth() +"\n");
+		pw.print("in gate: "+this.gate +" ");
+		pw.print("at "+this.flightDate.getYear() +" "+ this.flightDate.getMonth() +" "+ this.flightDate.getDayOfMonth() +" ");
 		
-		pw.write(this.gate +"\n");
-		pw.write(this.status.toString() +"\n");
+		pw.print("| Current status: "+this.status.toString() +"\n");
+		
 	}
 	
 	public void setFlightNumber(String flightNumber) {

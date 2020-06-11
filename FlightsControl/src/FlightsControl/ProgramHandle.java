@@ -1,5 +1,6 @@
 package FlightsControl;
 
+import java.io.FileNotFoundException;
 import java.time.Duration;
 import java.time.LocalDate;
 import java.util.Scanner;
@@ -10,7 +11,7 @@ import FlightsControl.Flight.eType;
 public class ProgramHandle {
 	static int choice = -1;
 
-	public static void startMain(FlightsControl control, Scanner scan) {
+	public static void startMain(FlightsControl control, Scanner scan) throws FileNotFoundException {
 		System.out.println("---------------------HELLO AND WELCOME----------------------");
 		System.out.println("--------------You Enter To FlightControlApp 2.0--------------");
 		System.out.println("Lets get started!");
@@ -20,7 +21,7 @@ public class ProgramHandle {
 			showMainMenu(control, scan);
 	}
 
-	private static boolean performMainAction(FlightsControl control, Scanner scan)  {
+	private static boolean performMainAction(FlightsControl control, Scanner scan) throws FileNotFoundException  {
 		switch (choice) {
 		case 10:
 			System.out.println("Have a nice day!");
@@ -36,11 +37,21 @@ public class ProgramHandle {
 		case 5:
 			System.out.println(control.showFlights());
 			return true;
+		case 6:
+			saveDataToFile(control, scan);
 		default:
 			System.out.println("Wrong input! try again");
 			return performFilterAction(control, scan);
 		}
 	}
+	///File Save///
+	private static void saveDataToFile(FlightsControl control, Scanner scan) throws FileNotFoundException {
+		System.out.println("please enter file name (EX: flight.txt):");
+		String fileName = scan.next();
+		control.save(fileName);
+		showMainMenu(control, scan);
+	}
+	///File Save///
 
 	///arithmetic///
 
@@ -306,17 +317,18 @@ public class ProgramHandle {
 
 	///show menus///
 
-	private static void showMainMenu(FlightsControl control, Scanner scan) {
+	private static void showMainMenu(FlightsControl control, Scanner scan) throws FileNotFoundException {
 		System.out.println("\nMENU: please enter the number of the desired action:");
 		System.out.println("1: Add Flight");
 		System.out.println("2: Cancel Flight");
 		System.out.println("3: Sort Flights");
 		System.out.println("4: Filter Flights");
 		System.out.println("5: Show Flights");
+		System.out.println("6: Save Data To File");
 		System.out.println("10: EXIT");
 
 		choice = scan.nextInt();
-		if ((choice <= 5 && choice >= 1) || choice == 10) {
+		if ((choice <= 6 && choice >= 1) || choice == 10) {
 			if (performMainAction(control, scan))
 				System.out.println("Action performed successfuly!!");
 
