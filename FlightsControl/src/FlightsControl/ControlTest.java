@@ -188,12 +188,12 @@ public class ControlTest {
 	///Filter
 
 	///Show
-/*	@Test
+	@Test
 	public void showFlighsTest() {
-		Flight flight1 = new Flight("TestAirline1", eType.Arrival, "TestCountry1", "TestCity1", "TestAirport1", LocalDate.of(2021, 4, 4), Duration.ofMinutes(4), "A1");
-		Flight flight2 = new Flight("TestAirline2", eType.Departure, "TestCountry2", "TestCity2", "TestAirport2", LocalDate.of(2021, 3, 3), Duration.ofMinutes(3), "B2");
-		Flight flight3 = new Flight("TestAirline3", eType.Arrival, "TestCountry3", "TestCity3", "TestAirport3", LocalDate.of(2021, 2, 2), Duration.ofMinutes(2), "C3");
-		Flight flight4 = new Flight("TestAirline4", eType.Departure, "TestCountry3", "TestCity4", "TestAirport4", LocalDate.of(2021, 1, 1), Duration.ofMinutes(1), "D4");
+		Flight flight1 = new Flight("TestAirline1", eType.Arrival, "TestCountry1", "TestCity1", "TestAirport1", LocalDate.of(2021, 4, 4), "A1");
+		Flight flight2 = new Flight("TestAirline2", eType.Departure, "TestCountry2", "TestCity2", "TestAirport2", LocalDate.of(2021, 3, 3), "B2");
+		Flight flight3 = new Flight("TestAirline3", eType.Arrival, "TestCountry3", "TestCity3", "TestAirport3", LocalDate.of(2021, 2, 2), "C3");
+		Flight flight4 = new Flight("TestAirline4", eType.Departure, "TestCountry4", "TestCity4", "TestAirport4", LocalDate.of(2021, 1, 1), "D4");
 		control.addFlight(flight1);
 		control.addFlight(flight2);
 		control.cancelFlight(flight2.getFlightNumber());
@@ -203,24 +203,21 @@ public class ControlTest {
 		StringBuffer str = new StringBuffer("Flights: \n");
 		str.append("1- Flight number: "+ flight1.getFlightNumber() +" of Airline: TestAirline1 | "
 				   + "Arrival from: TestAirport1 airport- TestCity1, TestCountry1 "
-				   + "in gate: A1 at 2021-04-04 | Flight duration: 4 minutes | Current status: OnTime\n");
-		
+				   + "in gate: A1 at SUNDAY 2021-04-04 | Current status: OnTime\n");
 		str.append("2- Flight number: "+ flight2.getFlightNumber() +" of Airline: TestAirline2 | "
 				   + "Departure from: TestAirport2 airport- TestCity2, TestCountry2 "
-				   + "in gate: B2 at 2021-03-03 | Flight duration: 3 minutes | Current status: Canceled\n");
-		
+				   + "in gate: B2 at WEDNESDAY 2021-03-03 | Current status: Canceled\n");
 		str.append("3- Flight number: "+ flight3.getFlightNumber() +" of Airline: TestAirline3 | "
 				   + "Arrival from: TestAirport3 airport- TestCity3, TestCountry3 "
-				   + "in gate: C3 at 2021-02-02 | Flight duration: 2 minutes | Current status: OnTime\n");
-		
+				   + "in gate: C3 at TUESDAY 2021-02-02 | Current status: OnTime\n");
 		str.append("4- Flight number: "+ flight4.getFlightNumber() +" of Airline: TestAirline4 | "
 				   + "Departure from: TestAirport4 airport- TestCity4, TestCountry4 "
-				   + "in gate: D4 at 2021-01-01 | Flight duration: 1 minutes | Current status: OnTime\n");
+				   + "in gate: D4 at FRIDAY 2021-01-01 | Current status: OnTime\n");
 		
 		String t = control.showFlights();
 		assertEquals(str.toString(), t);
 		
-	}*/
+	}
 
 	///Show
 }

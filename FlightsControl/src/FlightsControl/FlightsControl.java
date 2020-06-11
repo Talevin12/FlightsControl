@@ -19,10 +19,10 @@ public class FlightsControl {
 	}
 	
 	public FlightsControl(Scanner scan) throws FileNotFoundException {
-		int flightsSize = scan.nextInt();
-		this.flights = new ArrayList<>(flightsSize);
-		for(int i = 0; i < flightsSize; i++) {
-			this.flights.set(i, new Flight(scan));
+//		int flightsSize = scan.nextInt();
+		this.flights = new ArrayList<>(/*flightsSize*/);
+		while(scan.hasNext()) {
+			this.flights.add(new Flight(scan));
 		}
 	}
 	
@@ -173,16 +173,22 @@ public class FlightsControl {
 		this.presentationFlights = this.flights;
 	}
 	
-	public void filterByArgs(eType type, String airline, String country, String city, String airport, LocalDate startDate, LocalDate endDate, String dayOFWeek, String gate, eStatus status) {
+	public void filterByArgs(eType type, String airline, String country, String city, String airport, LocalDate startDate, LocalDate endDate, String dayOfWeek) {
 		this.filterByFlightType(type);
-		this.filterByAirLine(airline);
-		this.filterByCountry(country);
-		this.filterByCity(city);
-		this.filterByAirport(airport);
+		if(airline != "")
+			this.filterByAirLine(airline);
+		if(country != "")
+			this.filterByCountry(country);
+		if(city != "")
+			this.filterByCity(city);
+		if(airport != "")
+			this.filterByAirport(airport);
+		
 		this.filterByFlightDateMargin(startDate, endDate);
-//		this.filterByDayOfWeek(dayOFWeek);
-		this.filterByGate(gate);
-		this.filterByStatus(status);
+		if(dayOfWeek != "")
+			this.filterByDayOfWeek(dayOfWeek);
+//		this.filterByGate(gate);
+//		this.filterByStatus(status);
 	}
 	
 	/// arithmetic

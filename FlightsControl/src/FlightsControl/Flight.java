@@ -45,7 +45,7 @@ public class Flight {
 		this.airport = scan.nextLine();
 		
 		this.flightDate = LocalDate.of(scan.nextInt(), scan.nextInt(), scan.nextInt());
-		
+		 
 		scan.nextLine();
 		this.gate = scan.next();
 		scan.nextLine();
@@ -98,8 +98,8 @@ public class Flight {
 				   + "of Airline: "+ this.airlineName +" | "
 				   + this.flightType.toString() +" from: "+ this.airport +" airport- "+ this.city +", "+ this.country +" "
 				   + "in gate: "+ this.gate +" "
-				   + "at "+ this.flightDate.toString() +", "
-				   + this.flightDate.getDayOfWeek() +" minutes | "
+				   + "at "+ this.flightDate.getDayOfWeek().toString() +" "
+				   + this.flightDate.toString() +" | "
 				   + "Current status: "+ this.status.toString();
 		return str;
 	}
