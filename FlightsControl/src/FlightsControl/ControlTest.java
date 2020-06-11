@@ -32,9 +32,11 @@ public class ControlTest {
 		control.addFlight(flight1);
 		control.addFlight(flight2);
 		control.cancelFlight(flight1.getFlightNumber());
-		assertTrue(flight1.getStatus().equals(eStatus.Canceled));	
+		assertTrue(flight1.getStatus().equals(eStatus.Canceled));
+		assertTrue(flight2.getStatus().equals(eStatus.OnTime));
 		control.cancelFlight(flight2.getFlightNumber());
-		assertTrue(flight2.getStatus().equals(eStatus.Canceled));	
+		assertTrue(flight2.getStatus().equals(eStatus.Canceled));
+		
 	}
 
 	///Arithmetic
