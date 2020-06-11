@@ -1,6 +1,7 @@
 package FlightsControl;
 
 import java.awt.List;
+import java.io.FileNotFoundException;
 import java.time.Duration;
 import java.time.LocalDate;
 
@@ -15,7 +16,7 @@ import FlightsControl.Flight.eType;
 
 public class ControlTest {
 	private final FlightsControl control = new FlightsControl();
-
+		
 	///Arithmetic
 	@Test
 	public void addFlightTest() {
@@ -128,9 +129,11 @@ public class ControlTest {
 		Flight[] test = {flight1};
 		assertArrayEquals(test, control.getPresentationFlights().toArray());
 	}
+	
+	
 
 	@Test
-	public void filterByFlighteDateMarginTest() {
+	public void filterByFlightDateMarginTest() {
 		Flight flight1 = new Flight("TestAirline1", eType.Arrival, "TestCountry1", "TestCity1", "TestAirport1", LocalDate.of(20, 2, 2), "A1");
 		Flight flight2 = new Flight("TestAirline2", eType.Departure, "TestCountry2", "TestCity2", "TestAirport2", LocalDate.of(10, 1, 1), "B2");
 
@@ -140,6 +143,19 @@ public class ControlTest {
 		Flight[] test = {flight1};
 		assertArrayEquals(test, control.getPresentationFlights().toArray());
 	}
+	
+	@Test
+	public void filterByFlightDayOfWeekTest() {
+		Flight flight1 = new Flight("TestAirline1", eType.Arrival, "TestCountry1", "TestCity1", "TestAirport1", LocalDate.of(2020, 6, 12), "A1");
+		Flight flight2 = new Flight("TestAirline2", eType.Departure, "TestCountry2", "TestCity2", "TestAirport2", LocalDate.of(10, 1, 2), "B2");
+
+		control.addFlight(flight1);
+		control.addFlight(flight2);
+		control.filterByDayOfWeek("Friday");
+		Flight[] test = {flight1};
+		assertArrayEquals(test, control.getPresentationFlights().toArray());
+	}
+	
 
 
 	@Test
