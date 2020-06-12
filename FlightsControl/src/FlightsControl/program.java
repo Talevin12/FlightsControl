@@ -71,15 +71,6 @@ public class program {
 				System.out.println("Wrong input! try again");
 				main(new String[0]);
 			}
-			String fileName  = "flights";
-			File file = new File(fileName);
-			Scanner scanFile = new Scanner(file);
-			FlightsControl controlFile = new FlightsControl(scanFile);
-			ProgramHandle.startMain(controlFile, new Scanner(System.in));
-
-//			FlightsControl controlSystem = new FlightsControl();
-//			Scanner scanSystem = new Scanner(System.in);
-//			ProgramHandle.startMain(controlSystem, scanSystem);
 		}
 	}
 
