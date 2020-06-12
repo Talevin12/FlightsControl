@@ -16,7 +16,7 @@ public class ProgramHandle {
 		System.out.println("---------------------HELLO AND WELCOME----------------------");
 		System.out.println("--------------You Enter To FlightControlApp 2.0--------------");
 		System.out.println("Lets get started!");
-//		control.addHardCode();
+		control.addHardCode();
 
 		while(choice != 10)
 			showMainMenu(control, scan);
