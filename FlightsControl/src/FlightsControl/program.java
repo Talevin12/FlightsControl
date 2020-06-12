@@ -1,5 +1,6 @@
 package FlightsControl;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
@@ -48,14 +49,37 @@ public class program {
 			}
 		}
 		else { 
-//			String fileName  = "FlightsControl\\FlightControlFile.txt";
-//			Scanner scanFile = new Scanner(fileName);
-//			FlightsControl controlFile = new FlightsControl(scanFile);
-//			ProgramHandle.startMain(controlFile, new Scanner(System.in));
+			int choice = 0;
+			System.out.println("1- Want to load FlightsControl from flights.txt");
+			System.out.println("2- Want to start regulary");
+			Scanner scan = new Scanner(System.in);
+			choice = scan.nextInt();
+			switch(choice) {
+			case 1:
+				String fileName  = "flights";
+				File file = new File(fileName);
+				Scanner scanFile = new Scanner(file);
+				FlightsControl controlFile = new FlightsControl(scanFile);
+				ProgramHandle.startMain(controlFile, new Scanner(System.in));
+				break;
+				
+			case 2:
+				FlightsControl controlSystem = new FlightsControl();
+				ProgramHandle.startMain(controlSystem, scan);
+				break;
+			default:
+				System.out.println("Wrong input! try again");
+				main(new String[0]);
+			}
+			String fileName  = "flights";
+			File file = new File(fileName);
+			Scanner scanFile = new Scanner(file);
+			FlightsControl controlFile = new FlightsControl(scanFile);
+			ProgramHandle.startMain(controlFile, new Scanner(System.in));
 
-			FlightsControl controlSystem = new FlightsControl();
-			Scanner scanSystem = new Scanner(System.in);
-			ProgramHandle.startMain(controlSystem, scanSystem);
+//			FlightsControl controlSystem = new FlightsControl();
+//			Scanner scanSystem = new Scanner(System.in);
+//			ProgramHandle.startMain(controlSystem, scanSystem);
 		}
 	}
 

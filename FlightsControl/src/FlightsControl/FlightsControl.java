@@ -19,26 +19,22 @@ public class FlightsControl {
 	}
 	
 	public FlightsControl(Scanner scan) throws FileNotFoundException {
-//		int flightsSize = scan.nextInt();
-		this.flights = new ArrayList<>(/*flightsSize*/);
-		while(scan.hasNext()) {
-			this.flights.add(new Flight(scan));
+		int flightsSize = scan.nextInt();
+		scan.nextLine();
+		this.flights = new ArrayList<>();
+		this.presentationFlights = new ArrayList<>();
+		Flight flight;
+		for(int i = 0; i < flightsSize; i++) {
+			flight = new Flight(scan);
+			this.flights.add(flight);
+			this.presentationFlights.add(flight);
 		}
-	}
-	
-	public void save(String fileName) throws FileNotFoundException {
-		PrintWriter pw = new PrintWriter(fileName);
-		pw.println("Total flights: "+this.flights.size() + "\n");
-		for(Flight flight : this.flights) {
-			flight.save(pw);
-		}
-		pw.close();
 	}
 	
 	/// save data to file///
 	
 	public void save(PrintWriter pw) throws FileNotFoundException {
-		pw.println(this.flights.size() + "\n");
+		pw.print(this.flights.size() + "\n");
 		for(Flight flight : this.flights) {
 			flight.save(pw);
 		}

@@ -36,35 +36,35 @@ public class Flight {
 	}
 	
 	public Flight(Scanner scan) throws FileNotFoundException {
-		this.airlineName = scan.nextLine();
+
+		this.flightNumber = scan.next();
 		this.flightType = eType.valueOf(scan.next());
-		scan.nextLine();
+		this.airlineName = scan.nextLine();
 		
 		this.country = scan.nextLine();
 		this.city = scan.nextLine();
 		this.airport = scan.nextLine();
-		
-		this.flightDate = LocalDate.of(scan.nextInt(), scan.nextInt(), scan.nextInt());
+		int year = scan.nextInt();
+		this.flightDate = LocalDate.of(year, scan.nextInt(), scan.nextInt());
 		 
 		scan.nextLine();
 		this.gate = scan.next();
-		scan.nextLine();
 		this.status = eStatus.valueOf(scan.next());
 	}
 	
 	public void save(PrintWriter pw) throws FileNotFoundException { // from write to println 
-		pw.print("Flight number: "+this.flightNumber + "\t");
-		pw.print("of Airline: "+this.airlineName+" ");
-		pw.print("| "+this.flightType.toString() + "-->");
+		pw.print(this.flightNumber +" ");
+		pw.print(this.flightType.toString() +" ");
+		pw.print(this.airlineName +"\n");
 		
-		pw.print(this.airport + "-");
-		pw.print(this.city + "-");
-		pw.print(this.country +"- |");
+		pw.print(this.country +"\n");
+		pw.print(this.city +"\n");
+		pw.print(this.airport +"\n");
 		
-		pw.print("in gate: "+this.gate +" ");
-		pw.print("at "+this.flightDate.getYear() +" "+ this.flightDate.getMonth() +" "+ this.flightDate.getDayOfMonth() +" ");
+		pw.print(this.flightDate.getYear() +" "+ this.flightDate.getMonthValue() +" "+ this.flightDate.getDayOfMonth() +"\n");
 		
-		pw.print("| Current status: "+this.status.toString() +"\n");
+		pw.print(this.gate +"\t");
+		pw.print(this.status.toString() +"\n");
 		
 	}
 	

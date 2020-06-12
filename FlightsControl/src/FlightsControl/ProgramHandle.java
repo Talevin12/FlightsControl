@@ -1,6 +1,7 @@
 package FlightsControl;
 
 import java.io.FileNotFoundException;
+import java.io.PrintWriter;
 import java.time.Duration;
 import java.time.LocalDate;
 import java.util.Scanner;
@@ -15,7 +16,7 @@ public class ProgramHandle {
 		System.out.println("---------------------HELLO AND WELCOME----------------------");
 		System.out.println("--------------You Enter To FlightControlApp 2.0--------------");
 		System.out.println("Lets get started!");
-		control.addHardCode();
+//		control.addHardCode();
 
 		while(choice != 10)
 			showMainMenu(control, scan);
@@ -48,7 +49,8 @@ public class ProgramHandle {
 	private static void saveDataToFile(FlightsControl control, Scanner scan) throws FileNotFoundException {
 		System.out.println("please enter file name (EX: flight.txt):");
 		String fileName = scan.next();
-		control.save(fileName);
+		PrintWriter pw = new PrintWriter(fileName);
+		control.save(pw);
 		showMainMenu(control, scan);
 	}
 	///File Save///
