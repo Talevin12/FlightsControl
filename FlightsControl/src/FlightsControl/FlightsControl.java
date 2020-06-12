@@ -299,6 +299,46 @@ public class FlightsControl {
 		return str.toString();
 	}
 	
+	public String showAddFlightHTML() {
+		StringBuffer str = new StringBuffer("<form action=\"/addFlight.php\">");
+		str.append("<label for=\"airline\">Airline name:</label>");
+		str.append("<input id=\"airline\" name=\"airline\" type=\"text\" /><br /><br />");
+		
+		str.append("<div id=\"type\">");
+		str.append("<label>Type:</label><br />");
+		str.append("<label>Departure</label>");
+		str.append("<input type=\"radio\" value=\"departure\" name=\"type\">");
+		str.append("<label>Arrival</label>");
+		str.append("<input type=\"radio\" value=\"arrival\" name=\"type\">");
+		str.append("</div><br />");
+		
+		str.append("<label for=\"country\">Country:</label>");
+		str.append("<input id=\"country\" name=\"country\" type=\"text\" /><br /><br />");
+		
+		str.append("<label for=\"city\">City:</label>");
+		str.append("<input id=\"city\" name=\"city\" type=\"text\" /><br /><br />");
+		
+		str.append("<label for=\"airport\">Airport:</label>");
+		str.append("<input id=\"airport\" name=\"airport\" type=\"text\" /><br /><br />");
+		
+		str.append("<div id=\"date\">");
+		str.append("<label>Date:</label><br />");
+		str.append("<label>Year:</label>");
+		str.append("<input id=\"year:\" name=\"year\" type=\"number\" />");
+		str.append("<label>Month:</label>");
+		str.append("<input id=\"month:\" name=\"month\" type=\"number\" />");
+		str.append("<label>Day:</label>");
+		str.append("<input id=\"day:\" name=\"day\" type=\"number\" />");
+		str.append("</div>");
+		
+		str.append("<label for=\"gate\">Gate:</label>");
+		str.append("<input id=\"gate\" name=\"gate\" type=\"text\" /><br /><br />");
+		
+		str.append("<input type=\"submit\" value=\"Submit\" />");
+		str.append("</form>");
+		return str.toString();
+	}
+	
 	public void addHardCode() {
 		///hard code///
 

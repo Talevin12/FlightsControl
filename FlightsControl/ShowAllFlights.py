@@ -8,7 +8,8 @@ app = Flask("natbag2020_app")
 @app.route("/departures")
 def dep():
     return subprocess.check_output(["java", "-classpath",
-                                    "C:\\Users\\talev\\git\\FlightsControl\\FlightsControl\\bin", "FlightsControl.program",
+                                    "C:\\Users\\talev\\git\\FlightsControl\\FlightsControl\\bin", "FlightsControl"
+                                                                                                  ".program",
                                     request.args.get('outformat'), "departures",
                                     request.args.get('airline'), request.args.get('country'),
                                     request.args.get('city'), request.args.get('airport'),
@@ -18,7 +19,7 @@ def dep():
                                     request.args.get('sunday'), request.args.get('monday'),
                                     request.args.get('tuesday'), request.args.get('wednesday'),
                                     request.args.get('thursday'), request.args.get('friday'),
-                                    request.args.get(   'saturday')])
+                                    request.args.get('saturday')])
 
 
 
@@ -36,6 +37,12 @@ def arr():
                                     request.args.get('tuesday'), request.args.get('wednesday'),
                                     request.args.get('thursday'), request.args.get('friday'),
                                     request.args.get('saturday')])
+
+@app.route("/addFlight")
+def add():
+    return subprocess.check_output(["java", "-classpath",
+                                    "C:/Users/talev/git/FlightsControl/FlightsControl/bin", "FlightsControl.program",
+                                    "addFlight"])
 
 
 app.run(port=8000, host="0.0.0.0")

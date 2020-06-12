@@ -14,38 +14,43 @@ public class program {
 
 	public static void main(String[] args) throws FileNotFoundException {
 		if(args.length > 0) {
-			String format = args[0];
-			String airline = args[2];
-			String country = args[3];
-			String city = args[4];
-			String airport = args[5];
-			int day1 = Integer.parseInt(args[6]);
-			int month1 = Integer.parseInt(args[7]);
-			int year1 = Integer.parseInt(args[8]);
-			LocalDate startDate = LocalDate.of(year1, month1, day1);
-			int day2 = Integer.parseInt(args[9]);
-			int month2 = Integer.parseInt(args[10]);
-			int year2 = Integer.parseInt(args[11]);
-			LocalDate endDate = LocalDate.of(year2, month2, day2);
-			Boolean[] days = new Boolean[7];
-			for(int i = 0; i < days.length; i++)
-				days[i] = Boolean.parseBoolean(args[i+12]);
-			String dayOfWeek = DayOfWeek.of(whichDayTrue(days)).toString();
-
 			FlightsControl control = new FlightsControl();
 			control.addHardCode();
-			boolean isDepartures = args.length > 1 && args[1].equalsIgnoreCase("departures");
-			if (isDepartures) {
-				System.out.println("<h1>Departures</h1");
-				control.removeFilters();
-				control.filterByArgs(eType.Departure, airline, country, city, airport, startDate, endDate, dayOfWeek);
-				System.out.println(control.showFlightsTable());
+			if(args.length > 1 && !args[1].equalsIgnoreCase("addFlight")) {
+				String format = args[0];
+				String airline = args[2];
+				String country = args[3];
+				String city = args[4];
+				String airport = args[5];
+				int day1 = Integer.parseInt(args[6]);
+				int month1 = Integer.parseInt(args[7]);
+				int year1 = Integer.parseInt(args[8]);
+				LocalDate startDate = LocalDate.of(year1, month1, day1);
+				int day2 = Integer.parseInt(args[9]);
+				int month2 = Integer.parseInt(args[10]);
+				int year2 = Integer.parseInt(args[11]);
+				LocalDate endDate = LocalDate.of(year2, month2, day2);
+				Boolean[] days = new Boolean[7];
+				for(int i = 0; i < days.length; i++)
+					days[i] = Boolean.parseBoolean(args[i+12]);
+				String dayOfWeek = DayOfWeek.of(whichDayTrue(days)).toString();
+
+				boolean isDepartures = args.length > 1 && args[1].equalsIgnoreCase("departures");
+				if (isDepartures) {
+					System.out.println("<h1>Departures</h1");
+					control.removeFilters();
+					control.filterByArgs(eType.Departure, airline, country, city, airport, startDate, endDate, dayOfWeek);
+					System.out.println(control.showFlightsTable());
+				}
+				else {
+					System.out.println("<h1>Arrivals</h1");
+					control.removeFilters();
+					control.filterByArgs(eType.Arrival, airline, country, city, airport, startDate, endDate, dayOfWeek);
+					System.out.println(control.showFlightsTable());
+				}
 			}
 			else {
-				System.out.println("<h1>Arrivals</h1");
-				control.removeFilters();
-				control.filterByArgs(eType.Arrival, airline, country, city, airport, startDate, endDate, dayOfWeek);
-				System.out.println(control.showFlightsTable());
+				System.out.println(control.showAddFlightHTML());
 			}
 		}
 		else { 
@@ -62,7 +67,7 @@ public class program {
 				FlightsControl controlFile = new FlightsControl(scanFile);
 				ProgramHandle.startMain(controlFile, new Scanner(System.in));
 				break;
-				
+
 			case 2:
 				FlightsControl controlSystem = new FlightsControl();
 				ProgramHandle.startMain(controlSystem, scan);
