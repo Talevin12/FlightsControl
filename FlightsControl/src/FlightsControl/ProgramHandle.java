@@ -4,6 +4,7 @@ import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.time.Duration;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.Scanner;
 
 import FlightsControl.Flight.eStatus;
@@ -47,9 +48,9 @@ public class ProgramHandle {
 	}
 	///File Save///
 	private static void saveDataToFile(FlightsControl control, Scanner scan) throws FileNotFoundException {
-		System.out.println("please enter file name (EX: flight.txt):");
-		String fileName = scan.next();
-		PrintWriter pw = new PrintWriter(fileName);
+//		System.out.println("please enter file name (EX: flight.txt):");
+//		String fileName = scan.next();
+		PrintWriter pw = new PrintWriter("flights.txt");
 		control.save(pw);
 		showMainMenu(control, scan);
 	}
@@ -67,6 +68,9 @@ public class ProgramHandle {
 		int month = 0;
 		int day = 0;
 		LocalDate flightDate;
+		int hour = 0;
+		int minute = 0;
+		LocalTime flightTime;
 		String gate;
 		boolean b = false;
 		scan.nextLine();
@@ -87,7 +91,7 @@ public class ProgramHandle {
 		airport  = scan.nextLine();
 
 		while(!b) {
-			System.out.println("Enter departure date: ");
+			System.out.println("Enter flight date: ");
 			System.out.println("Year: ");
 			year = scan.nextInt();
 
@@ -102,15 +106,30 @@ public class ProgramHandle {
 			else
 				System.out.println("Invalid date!");
 		}
-
 		flightDate = LocalDate.of(year, month, day); 
+		
+		b = false;
+		while(!b) {
+			System.out.println("Enter flight time: ");
+			System.out.println("Hour: ");
+			hour = scan.nextInt();
 
+			System.out.println("Minute: ");
+			minute = scan.nextInt();
+
+			if(checkTime(hour, minute))
+				b = true;
+			else
+				System.out.println("Invalid time!");
+		}
+
+		flightTime = LocalTime.of(hour, minute); 
 
 		scan.nextLine();
 		System.out.println("Enter gate number (ex: A1)");
 		gate = scan.next();
 
-		Flight flight = new Flight(airlineName, flightType, country, city, airport, flightDate, gate);
+		Flight flight = new Flight(airlineName, flightType, country, city, airport, flightDate, flightTime, gate);
 		return control.addFlight(flight);
 	}
 
@@ -149,9 +168,12 @@ public class ProgramHandle {
 			sortFlightsByDate(control);
 			return true;
 		case 2:
-			sortFlightsByFlightType(control);
+			sortFlightsByTime(control);
 			return true;
 		case 3:
+			sortFlightsByFlightType(control);
+			return true;
+		case 4:
 			sortFlightsByStatus(control);
 			return true;
 		default:
@@ -162,6 +184,11 @@ public class ProgramHandle {
 
 	private static void sortFlightsByDate(FlightsControl control) {
 		control.sortFlightsByDate();
+		System.out.println(control.showFlights());	
+	}
+	
+	private static void sortFlightsByTime(FlightsControl control) {
+		control.sortFlightsByTime();
 		System.out.println(control.showFlights());	
 	}
 	
@@ -208,12 +235,15 @@ public class ProgramHandle {
 			filterByDayOfWeek(control, scan);
 			return performFilterAction(control, scan);
 		case 7:
-			filterByGate(control, scan);
+			filterByFlightTime(control, scan);
 			return performFilterAction(control, scan);
 		case 8:
+			filterByGate(control, scan);
+			return performFilterAction(control, scan);
+		case 9:
 			filterByStatus(control, scan);
 			return performFilterAction(control, scan);
-		case 9: 
+		case 10: 
 			control.removeFilters();
 			return true;
 		default:
@@ -302,6 +332,45 @@ public class ProgramHandle {
 		String dayOfWeek = scan.next();
 		control.filterByDayOfWeek(dayOfWeek);
 	}
+	
+	private static void filterByFlightTime(FlightsControl control, Scanner scan) {
+		boolean b = false;
+		int hour1 = 0, hour2 = 0;
+		int minute1 = 0, minute2 = 0;
+
+		while(!b) {
+			System.out.println("Enter start Time: ");
+			System.out.println("Hour: ");
+			hour1 = scan.nextInt();
+
+			System.out.println("Minute: ");
+			minute1 = scan.nextInt();
+
+			if(checkTime(hour1, minute1))
+				b = true;
+			else
+				System.out.println("Invalid time!");
+		}
+		
+		b = false;
+		while(!b) {
+			System.out.println("Enter end Time: ");
+			System.out.println("Hour: ");
+			hour2 = scan.nextInt();
+
+			System.out.println("Minute: ");
+			minute2 = scan.nextInt();
+
+			if(checkTime(hour2, minute2))
+				b = true;
+			else
+				System.out.println("Invalid time!");
+		}
+
+		LocalTime start = LocalTime.of(hour1, minute1);
+		LocalTime end = LocalTime.of(hour2, minute2);
+		control.filterByFlightTimeMargin(start, end);
+	}
 
 	private static void filterByGate(FlightsControl control, Scanner scan) {
 		System.out.println("Enter desired gate number: ");
@@ -343,8 +412,9 @@ public class ProgramHandle {
 		System.out.println("\nSort menu: please enter the number of the desired action:");
 		System.out.println("0: Go Back To Menu");
 		System.out.println("1: Sort Flights By Date");
-		System.out.println("2: Sort Flights By Flight Type");
-		System.out.println("3: Sort By Status");
+		System.out.println("2: Sort Flights By Time");
+		System.out.println("3: Sort Flights By Flight Type");
+		System.out.println("4: Sort By Status");
 	}
 
 	private static void showFilterMenu() {
@@ -356,9 +426,10 @@ public class ProgramHandle {
 		System.out.println("4: Filter Flights By Airport");
 		System.out.println("5: Filter Flights By Flight Date");
 		System.out.println("6: Filter Flights By Day Of week");
-		System.out.println("7: Filter Flights By Gate");
-		System.out.println("8: Filter Flights By Status");
-		System.out.println("9: Remove Filters");
+		System.out.println("7: Filter Flights By Flight Time");
+		System.out.println("8: Filter Flights By Gate");
+		System.out.println("9: Filter Flights By Status");
+		System.out.println("10: Remove Filters");
 	}
 
 	///show menus///
@@ -377,6 +448,14 @@ public class ProgramHandle {
 		if (year == currentYear && month < currentMonth)
 			return false;
 		if (year == currentYear && month == currentMonth && day < currentDay)
+			return false;
+		return true;
+	}
+	
+	private static boolean checkTime(int hour, int minute) {
+		if(hour < 0 || hour > 23)
+			return false;
+		if(minute < 0 || minute >= 60)
 			return false;
 		return true;
 	}
