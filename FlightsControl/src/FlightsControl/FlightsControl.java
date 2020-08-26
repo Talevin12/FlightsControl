@@ -1,7 +1,6 @@
 package FlightsControl;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
-import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
@@ -194,20 +193,17 @@ public class FlightsControl {
 	
 	public void filterByArgs(eType type, String airline, String country, String city, String airport, LocalDate startDate, LocalDate endDate, String dayOfWeek) {
 		this.filterByFlightType(type);
-		if(airline != "")
+		if(!airline.isEmpty())
 			this.filterByAirLine(airline);
-		if(country != "")
+		if(!country.isEmpty())
 			this.filterByCountry(country);
-		if(city != "")
+		if(!city.isEmpty())
 			this.filterByCity(city);
-		if(airport != "")
+		if(!airport.isEmpty())
 			this.filterByAirport(airport);
-		
 		this.filterByFlightDateMargin(startDate, endDate);
-		if(dayOfWeek != "")
+		if(!dayOfWeek.isEmpty())
 			this.filterByDayOfWeek(dayOfWeek);
-//		this.filterByGate(gate);
-//		this.filterByStatus(status);
 	}
 	
 	/// arithmetic
@@ -323,10 +319,8 @@ public class FlightsControl {
 		return str.toString();
 	}
 	
-	public String showAddFlightHTML() {
-		StringBuffer str = new StringBuffer("<form action=\"/addFlight.php\">");
-		str.append("<label for=\"airline\">Airline name:</label>");
-		str.append("<input id=\"airline\" name=\"airline\" type=\"text\" /><br /><br />");
+	public String showSortFlightsHTML() {
+		StringBuffer str = new StringBuffer("<form action=\"/sortFlights.php\">");
 		
 		str.append("<div id=\"type\">");
 		str.append("<label>Type:</label><br />");
@@ -335,6 +329,9 @@ public class FlightsControl {
 		str.append("<label>Arrival</label>");
 		str.append("<input type=\"radio\" value=\"arrival\" name=\"type\">");
 		str.append("</div><br />");
+		
+		str.append("<label for=\"airline\">Airline name:</label>");
+		str.append("<input id=\"airline\" name=\"airline\" type=\"text\" /><br /><br />");
 		
 		str.append("<label for=\"country\">Country:</label>");
 		str.append("<input id=\"country\" name=\"country\" type=\"text\" /><br /><br />");
@@ -345,15 +342,26 @@ public class FlightsControl {
 		str.append("<label for=\"airport\">Airport:</label>");
 		str.append("<input id=\"airport\" name=\"airport\" type=\"text\" /><br /><br />");
 		
-		str.append("<div id=\"date\">");
-		str.append("<label>Date:</label><br />");
+		str.append("<div id=\"Start date\">");
+		
+		str.append("<label>Date margin:</label><br />");
+		str.append("<label>Date (start):</label><br />");
 		str.append("<label>Year:</label>");
 		str.append("<input id=\"year:\" name=\"year\" type=\"number\" />");
-		str.append("<label>Month:</label>");
+		str.append("<label>	Month:</label>");
 		str.append("<input id=\"month:\" name=\"month\" type=\"number\" />");
-		str.append("<label>Day:</label>");
+		str.append("<label>	Day:</label>");
+		str.append("<input id=\"day:\" name=\"day\" type=\"number\" /><br /><br />");
+		
+		str.append("<label>Date (end):</label><br />");
+		str.append("<label>Year:</label>");
+		str.append("<input id=\"year:\" name=\"year\" type=\"number\" />");
+		str.append("<label>	Month:</label>");
+		str.append("<input id=\"month:\" name=\"month\" type=\"number\" />");
+		str.append("<label>	Day:</label>");
 		str.append("<input id=\"day:\" name=\"day\" type=\"number\" />");
-		str.append("</div>");
+		
+		str.append("</div><br />");
 		
 		str.append("<label for=\"gate\">Gate:</label>");
 		str.append("<input id=\"gate\" name=\"gate\" type=\"text\" /><br /><br />");
@@ -407,22 +415,22 @@ public class FlightsControl {
 		Flight f7 = new Flight("Israir", eType.Arrival, "Italy", "Rome", "Aeroporto Leonardo da Vinci di Fiumicino", ld7, lt7, "A3");
 		this.addFlight(f7);
 		//9
-		LocalDate ld8= LocalDate.of(2021, 7, 28);
+		LocalDate ld8= LocalDate.of(2021, 7, 28);//Wednesday
 		LocalTime lt8 = LocalTime.of(0,0);
 		Flight f8 = new Flight("Vietnam Airlines", eType.Departure, "Vietnam", "Hanoi", "Noi Bai", ld8, lt8, "B3");
 		this.addFlight(f8);
 		//10
-		LocalDate ld9= LocalDate.of(2021, 2, 7);
+		LocalDate ld9= LocalDate.of(2021, 2, 7);//Sunday
 		LocalTime lt9 = LocalTime.of(7,30);
 		Flight f9 = new Flight("El Al", eType.Departure, "Austria", "Vienna", "Vienna", ld9, lt9, "A1");
 		this.addFlight(f9);
 		//11
-		LocalDate ld10= LocalDate.of(2021, 4, 15);
+		LocalDate ld10= LocalDate.of(2021, 4, 15);//Thursday
 		LocalTime lt10 = LocalTime.of(18,40);
 		Flight f10 = new Flight("Turkish Airlines", eType.Arrival, "United States", "New York", "JFK", ld10, lt10, "B1");
 		this.addFlight(f10);
 		//12
-		LocalDate ld11= LocalDate.of(2021, 5, 19);
+		LocalDate ld11= LocalDate.of(2021, 5, 19);//Wednesday
 		LocalTime lt11 = LocalTime.of(14,50);
 		Flight f11 = new Flight("El Al", eType.Departure, "England", "London", "Heathrow", ld11, lt11, "B17");
 		this.addFlight(f11);

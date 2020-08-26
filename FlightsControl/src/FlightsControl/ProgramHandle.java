@@ -12,6 +12,7 @@ import FlightsControl.Flight.eType;
 
 public class ProgramHandle {
 	static int choice = -1;
+	static boolean exitFlag = false;
 
 	public static void startMain(FlightsControl control, Scanner scan) throws FileNotFoundException {
 		System.out.println("---------------------HELLO AND WELCOME----------------------");
@@ -27,6 +28,7 @@ public class ProgramHandle {
 		switch (choice) {
 		case 10:
 			System.out.println("Have a nice day!");
+			exitFlag = true;
 			return false;
 		case 1:
 			return addFlight(control, scan);
@@ -404,7 +406,8 @@ public class ProgramHandle {
 				System.out.println("Action performed successfuly!!");
 
 			else
-				System.out.println("No action performed");
+				if(!exitFlag)
+					System.out.println("No action performed");
 		}
 	}
 
