@@ -8,10 +8,11 @@ import java.util.Scanner;
 import FlightsControl.Flight.eType;
 
 //http://localhost:8000/arrivals?outformat=html&country=Italy&city=Rome&airport=Aeroporto%20Leonardo%20da%20Vinci%20di%20Fiumicino&airline=Israir&day1=4&month1=6&year1=2010&day2=31&month2=7&year2=2030&sunday=false&monday=false&tuesday=false&wednesday=true&thursday=false&friday=true&saturday=false
+//http://localhost:8000/filterFlights?outformat=html
 public class program { 
 
 	public static void main(String[] args) throws FileNotFoundException {
-		if(args.length > 0 || (args.length > 1 && !args[0].equalsIgnoreCase("html"))) {
+		if(args.length > 0 || (args.length >= 1 && !args[0].equalsIgnoreCase("html"))) {
 			FlightsControl control = new FlightsControl();
 			control.addHardCode();
 			if(args.length > 1 || !args[0].equalsIgnoreCase("html")) {
@@ -55,7 +56,7 @@ public class program {
 					}
 				}
 				else {
-					System.out.println(control.showSortFlightsHTML());
+					System.out.println(control.showFilterFlightsHTML());
 				}
 			}
 		}

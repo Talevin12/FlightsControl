@@ -17,7 +17,7 @@ public class FlightsControl {
 		this.flights = new ArrayList<>();
 		this.presentationFlights = new ArrayList<>();
 	}
-	
+
 	public FlightsControl(Scanner scan) throws FileNotFoundException {
 		int flightsSize = scan.nextInt();
 		scan.nextLine();
@@ -30,9 +30,9 @@ public class FlightsControl {
 			this.presentationFlights.add(flight);
 		}
 	}
-	
+
 	/// save data to file///
-	
+
 	public void save(PrintWriter pw) throws FileNotFoundException {
 		pw.print(this.flights.size() + "\n");
 		for(Flight flight : this.flights) {
@@ -41,7 +41,7 @@ public class FlightsControl {
 		pw.close();
 	}
 	/// save data to file///
-	
+
 
 	///Sorting
 	public void sortFlightsByDate(){
@@ -56,7 +56,7 @@ public class FlightsControl {
 			}
 		}
 	}
-	
+
 	public void sortFlightsByTime(){
 		int n = this.presentationFlights.size(); 
 		for (int i = 0; i < n-1; i++) {
@@ -82,7 +82,7 @@ public class FlightsControl {
 			}
 		}
 	}
-	
+
 	public void sortFlightsByStatus() {
 		int n = this.presentationFlights.size(); 
 		for (int i = 0; i < n-1; i++) {
@@ -95,9 +95,9 @@ public class FlightsControl {
 			}
 		}
 	}
-	
+
 	///Filtering
-	
+
 	public void filterByFlightType(eType type) {
 		for(int i = 0; i < this.presentationFlights.size(); i++) {
 			if(!this.presentationFlights.get(i).getType().equals(type)) {
@@ -106,7 +106,7 @@ public class FlightsControl {
 			}
 		}
 	}
-	
+
 	public void filterByAirLine(String airline) {
 		for(int i = 0; i < this.presentationFlights.size(); i++) {
 			if(!this.presentationFlights.get(i).getAirline().equals(airline)) {
@@ -115,7 +115,7 @@ public class FlightsControl {
 			}
 		}
 	}
-	
+
 	public void filterByCountry(String country) {
 		for(int i = 0; i < this.presentationFlights.size(); i++) {
 			if(!this.presentationFlights.get(i).getDestination().equals(country)) {
@@ -124,7 +124,7 @@ public class FlightsControl {
 			}
 		}
 	}
-	
+
 	public void filterByCity(String city) {
 		for(int i = 0; i < this.presentationFlights.size(); i++) {
 			if(!this.presentationFlights.get(i).getCity().equals(city)) {
@@ -133,7 +133,7 @@ public class FlightsControl {
 			}
 		}
 	}
-	
+
 	public void filterByAirport(String airport) {
 		for(int i = 0; i < this.presentationFlights.size(); i++) {
 			if(!this.presentationFlights.get(i).getAirport().equals(airport)) {
@@ -151,7 +151,7 @@ public class FlightsControl {
 			}
 		}
 	}
-	
+
 	public void filterByDayOfWeek(String dayOfWeek) {
 		for(int i = 0; i < this.presentationFlights.size(); i++) {
 			if(!this.presentationFlights.get(i).getFlightDate().getDayOfWeek().toString().equalsIgnoreCase(dayOfWeek)) {
@@ -160,7 +160,7 @@ public class FlightsControl {
 			}
 		}
 	}
-	
+
 	public void filterByFlightTimeMargin(LocalTime start, LocalTime end) {
 		for(int i = 0; i < this.presentationFlights.size(); i++) {
 			if(!(this.presentationFlights.get(i).getFlightTime().isAfter(start) && this.presentationFlights.get(i).getFlightTime().isBefore(end))) {
@@ -169,7 +169,7 @@ public class FlightsControl {
 			}
 		}
 	}
-	
+
 	public void filterByGate(String gate) {
 		for(int i = 0; i < this.presentationFlights.size(); i++) {
 			if(!this.presentationFlights.get(i).getGate().equals(gate)) {
@@ -186,11 +186,11 @@ public class FlightsControl {
 			}
 		}
 	}
-	
+
 	public void removeFilters() {
 		this.presentationFlights = this.flights;
 	}
-	
+
 	public void filterByArgs(eType type, String airline, String country, String city, String airport, LocalDate startDate, LocalDate endDate, String dayOfWeek) {
 		this.filterByFlightType(type);
 		if(!airline.isEmpty())
@@ -205,32 +205,32 @@ public class FlightsControl {
 		if(!dayOfWeek.isEmpty())
 			this.filterByDayOfWeek(dayOfWeek);
 	}
-	
+
 	/// arithmetic
-	
+
 	public ArrayList<Flight> getFlights() {
 		return this.flights;
 	}
-	
+
 	public ArrayList<Flight> getPresentationFlights() {
 		return this.presentationFlights;
 	}
-	
-    public static String generateFlightNumber(int n) 
-    { 
-        String AlphaNumericString = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-                                    + "0123456789"; 
-  
-        StringBuilder sb = new StringBuilder(n); 
- 
-        for (int i = 0; i < n; i++) { 
-            int index 
-                = (int)(AlphaNumericString.length() * Math.random()); 
-  
-            sb.append(AlphaNumericString.charAt(index)); 
-        } 
-        return sb.toString(); 
-    }
+
+	public static String generateFlightNumber(int n) 
+	{ 
+		String AlphaNumericString = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+				+ "0123456789"; 
+
+		StringBuilder sb = new StringBuilder(n); 
+
+		for (int i = 0; i < n; i++) { 
+			int index 
+			= (int)(AlphaNumericString.length() * Math.random()); 
+
+			sb.append(AlphaNumericString.charAt(index)); 
+		} 
+		return sb.toString(); 
+	}
 
 	public boolean addFlight(Flight flight) {
 		String flightNum = "";
@@ -245,7 +245,7 @@ public class FlightsControl {
 		this.presentationFlights.add(flight);
 		return true;
 	} 
-	
+
 	private boolean isFlightNumExist(String flightNum) {
 		for(Flight flight : this.flights)
 			if(flight.getFlightNumber().equals(flightNum))
@@ -262,10 +262,10 @@ public class FlightsControl {
 		}
 		return false;
 	}
-	
+
 	private void refresh() {
 		Flight temp = null;
-		
+
 		for(int i = 0; i < this.flights.size(); i++) {
 			if(!this.flights.get(i).getFlightDate().isAfter(LocalDate.now())) {
 				temp = this.flights.get(i);
@@ -282,23 +282,23 @@ public class FlightsControl {
 				this.presentationFlights.remove(i);
 		}
 	}
-	
+
 	///Displaying
 
 	public String showFlights() {
 		refresh();
-		
+
 		StringBuffer str = new StringBuffer("Flights: \n");
 		for(int i = 0; i < presentationFlights.size(); i++) {
 			str.append((i+1) +"- "+presentationFlights.get(i).toString() + "\n");
 		}
-		
+
 		return str.toString();
 	}
-	
+
 	public String showFlightsTable() {
 		refresh();
-		
+
 		StringBuffer str = new StringBuffer("<h2>Flights:</h2> <br>");
 		str.append("<table style='width:100%'>");
 		str.append("<tr align='left'><th>Airline</th>");
@@ -315,62 +315,73 @@ public class FlightsControl {
 			str.append("<tr>"+ presentationFlights.get(i).toStringTable() + "</tr>");
 		}
 		str.append("</table>");
-		
+
 		return str.toString();
 	}
-	
-	public String showSortFlightsHTML() {
-		StringBuffer str = new StringBuffer("<form action=\"/sortFlights.php\">");
-		
+
+	public String showFilterFlightsHTML() {
+		StringBuffer str = new StringBuffer(
+				"<form  method=\"post\">");
+
 		str.append("<div id=\"type\">");
 		str.append("<label>Type:</label><br />");
 		str.append("<label>Departure</label>");
-		str.append("<input type=\"radio\" value=\"departure\" name=\"type\">");
+		str.append("<input type=\"radio\" value=\"departures\" checked name=\"type\">");
 		str.append("<label>Arrival</label>");
-		str.append("<input type=\"radio\" value=\"arrival\" name=\"type\">");
+		str.append("<input type=\"radio\" value=\"arrivals\" name=\"type\">");
 		str.append("</div><br />");
-		
+
 		str.append("<label for=\"airline\">Airline name:</label>");
-		str.append("<input id=\"airline\" name=\"airline\" type=\"text\" /><br /><br />");
-		
+		str.append("<input id=\"airline\" name=\"airline\" type=\"text\" value=\"El Al\"/><br /><br />");
+
 		str.append("<label for=\"country\">Country:</label>");
-		str.append("<input id=\"country\" name=\"country\" type=\"text\" /><br /><br />");
-		
+		str.append("<input id=\"country\" name=\"country\" type=\"text\" value=\"Spain\" /><br /><br />");
+
 		str.append("<label for=\"city\">City:</label>");
-		str.append("<input id=\"city\" name=\"city\" type=\"text\" /><br /><br />");
-		
+		str.append("<input id=\"city\" name=\"city\" type=\"text\" value=\"Madrid\" /><br /><br />");
+
 		str.append("<label for=\"airport\">Airport:</label>");
-		str.append("<input id=\"airport\" name=\"airport\" type=\"text\" /><br /><br />");
-		
+		str.append("<input id=\"airport\" name=\"airport\" type=\"text\" value=\"Barajas\" /><br /><br />");
+
 		str.append("<div id=\"Start date\">");
-		
+
 		str.append("<label>Date margin:</label><br />");
 		str.append("<label>Date (start):</label><br />");
 		str.append("<label>Year:</label>");
-		str.append("<input id=\"year:\" name=\"year\" type=\"number\" />");
+		str.append("<input id=\"year1\" name=\"year1\" type=\"number\" value=2019 />");
 		str.append("<label>	Month:</label>");
-		str.append("<input id=\"month:\" name=\"month\" type=\"number\" />");
+		str.append("<input id=\"month1\" name=\"month1\" type=\"number\" value=1 />");
 		str.append("<label>	Day:</label>");
-		str.append("<input id=\"day:\" name=\"day\" type=\"number\" /><br /><br />");
-		
+		str.append("<input id=\"day1\" name=\"day1\" type=\"number\" value=1 /><br /><br />");
+
 		str.append("<label>Date (end):</label><br />");
 		str.append("<label>Year:</label>");
-		str.append("<input id=\"year:\" name=\"year\" type=\"number\" />");
+		str.append("<input id=\"year2\" name=\"year2\" type=\"number\" value=2030 />");
 		str.append("<label>	Month:</label>");
-		str.append("<input id=\"month:\" name=\"month\" type=\"number\" />");
+		str.append("<input id=\"month2\" name=\"month2\" type=\"number\" value=1 />");
 		str.append("<label>	Day:</label>");
-		str.append("<input id=\"day:\" name=\"day\" type=\"number\" />");
-		
+		str.append("<input id=\"day2\" name=\"day2\" type=\"number\" value=1 />");
+
 		str.append("</div><br />");
+
+		str.append("<label for=\"days\">Choose a day:</label>");
 		
-		str.append("<label for=\"gate\">Gate:</label>");
-		str.append("<input id=\"gate\" name=\"gate\" type=\"text\" /><br /><br />");
-		
+		str.append("<select name=\"days\" id=\"days\">");
+		str.append("<option value=\"none\">none</option>");
+		str.append("<option value=\"sunday\">sunday</option>");
+		str.append("<option value=\"monday\">monday</option>");
+		str.append("<option value=\"tuesday\">tuesday</option>");
+		str.append("<option value=\"wednesday\">wednesday</option>");
+		str.append("<option value=\"thursday\">thursday</option>");
+		str.append("<option value=\"friday\" selected>friday</option>");
+		str.append("<option value=\"saturday\">saturday</option>");
+		str.append("</select><br /><br />");
+
 		str.append("<input type=\"submit\" value=\"Submit\" />");
 		str.append("</form>");
 		return str.toString();
 	}
-	
+
 	public void addHardCode() {
 		///hard code///
 
