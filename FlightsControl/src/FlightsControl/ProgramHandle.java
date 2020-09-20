@@ -2,7 +2,6 @@ package FlightsControl;
 
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
-import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.Scanner;

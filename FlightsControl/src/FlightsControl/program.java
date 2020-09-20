@@ -12,7 +12,7 @@ import FlightsControl.Flight.eType;
 public class program { 
 
 	public static void main(String[] args) throws FileNotFoundException {
-		if(args.length > 0 || (args.length >= 1 && !args[0].equalsIgnoreCase("html"))) {
+		if(args.length > 0 || (args.length >= 1 && !args[1].equalsIgnoreCase("html"))) {
 			FlightsControl control = new FlightsControl();
 			control.addHardCode();
 			if(args.length > 1 || !args[0].equalsIgnoreCase("html")) {

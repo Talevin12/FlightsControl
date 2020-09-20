@@ -1,0 +1,92 @@
+13
+R3BEA82X Departure El Al
+Spain
+Madrid
+Barajas
+2021 5 14
+4 20
+A1	OnTime
+PWX8VQP4 Arrival Air France
+France
+Paris
+Charles de Gaulle
+2021 6 26
+15 45
+B5	OnTime
+SC4OB80L Departure Air India
+India
+Delhi
+Indira Gandhi
+2021 1 10
+20 0
+C2	OnTime
+UZ4JZHUO Departure Turkish Airlines
+Turkey
+Istanbul
+Istanbul
+2021 4 10
+21 15
+A2	OnTime
+MQ8GIUCM Arrival Air Canada
+Canada
+Toronto
+Pearson
+2021 3 28
+1 30
+B2	OnTime
+ELUJN4LZ Arrival Thai Airways
+Thailand
+Bangkok
+Suvarnabhumi 
+2021 8 16
+11 50
+C1	OnTime
+4Z5XNQYL Departure Pegasus Airlines
+Greece
+Athens
+Eleftherios Venizelos
+2021 10 10
+17 20
+C3	OnTime
+648BSJ5E Arrival Israir
+Italy
+Rome
+Aeroporto Leonardo da Vinci di Fiumicino
+2021 12 3
+23 40
+A3	OnTime
+71UNJ84F Departure Vietnam Airlines
+Vietnam
+Hanoi
+Noi Bai
+2021 7 28
+0 0
+B3	OnTime
+R0SCJFI5 Departure El Al
+Austria
+Vienna
+Vienna
+2021 2 7
+7 30
+A1	OnTime
+URTTMDLQ Arrival Turkish Airlines
+United States
+New York
+JFK
+2021 4 15
+18 40
+B1	OnTime
+EJD9K0IB Departure El Al
+England
+London
+Heathrow
+2021 5 19
+14 50
+B17	OnTime
+73WVP56N Departure ghdfh
+sdfg
+anjfgh
+dsfh
+2021 1 1
+4 30
+sdf	OnTime
